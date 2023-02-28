@@ -22,7 +22,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_activity_released()
 {
-    grTest->drawPoint();
+    //grTest->drawPoint();
+    grTest->drawPoint(positionX,positionY);
+    positionX = positionX + 10;
+    positionY = positionY + 10;
     qDebug() << "Test";
 }
 

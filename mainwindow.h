@@ -18,11 +18,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     bool event(QEvent *event);
-
     QGraphicsScene *scene = new QGraphicsScene();
     //Graphics grTest(scene);
     Graphics *grTest = new Graphics(scene);
 
+    int positionX = 0;
+    int positionY = 0;
 private: signals:
     void screenchanged();
 

@@ -74,16 +74,11 @@
        <string>C</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
      <widget class="QPushButton" name="pushButton_activity">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
+        <x>30</x>
+        <y>0</y>
         <width>101</width>
         <height>24</height>
        </rect>
@@ -101,6 +96,11 @@
        <bool>false</bool>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
     </widget>
    </widget>
   </widget>

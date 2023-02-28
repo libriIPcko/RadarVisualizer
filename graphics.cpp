@@ -40,6 +40,26 @@ void Graphics::drawPoint(){
     tim_move->start();
 }
 
+void Graphics::drawPoint(int posX,int posY){
+    QRandomGenerator Gen_width;
+    QRandomGenerator Gen_height;
+    QPainter paint;
+    QRectF rect;
+    rect.setX(2);
+    rect.setY(2);
+    QPointF pos;
+    pos.setX(posX);
+    pos.setY(posY);
+    rect.moveTo(pos);
+    ell = m_scene->addEllipse(rect);
+    qDebug() << ell->pos();
+    /*
+    connect(tim_move,SIGNAL(timeout()),SLOT(on_move_timeout()));
+    tim_move->setInterval(400);
+    tim_move->start();
+    */
+}
+
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
