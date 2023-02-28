@@ -7,20 +7,12 @@
 #include <QRandomGenerator>
 #include <QTimer>
 
-class Graphics : QObject// : public QGraphicsObject
+class Graphics : QObject
 
 {
     Q_OBJECT
 public:
-    //Graphics(QGraphicsScene *scene, QGraphicsItem *parent = nullptr);
-    //Graphics(QGraphicsScene *scene, QObject *parent = nullptr);
-
     Graphics(QGraphicsScene *scene);
-    //Graphics(const Graphics&) = delete;     //delete copy constructor
-
-    //Graphics();
-
-    void drawSomething(QGraphicsScene* scene);
     void drawPoint();
     //void drawPoint(int posX, int posY);
     void drawSomething();
