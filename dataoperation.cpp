@@ -33,22 +33,28 @@ void DataOperation::read_from_parsed_file(QString path){
         while(data.readLineInto(&line)){
             int comma = 0;
             int next_comma = 0;
+            outStream << "\n";
             while(comma < line.length()){
-                if(next_comma == -1){
-                    break;
-                }
-                else{
-                    next_comma = line.indexOf(',',comma+1);
-                }
                 QString column;
+                next_comma = line.indexOf(',',comma+1);
                 while(comma < next_comma){
                     column.append(line.at(comma));
                     comma++;
                 }
+                if(next_comma == -1){
+                    while(comma < line.length()){
+                        column.append(line.at(comma));
+                        comma++;
+                    }
+                    //comma++; //jump comma
+                    qDebug() << column << "----";
+                    column.clear();
+                    break;
+                }
+                comma++; //jump comma
                 qDebug() << column << "----";
                 column.clear();
             }
         }
-
     }
 }
