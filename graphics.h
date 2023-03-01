@@ -7,6 +7,9 @@
 #include <QRandomGenerator>
 #include <QTimer>
 
+#include <dataoperation.h>
+#include <parseddata.h>
+
 class Graphics : QObject
 
 {
@@ -20,6 +23,8 @@ public:
     int bound_max_width = 0;
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem();
+
+    void show_frame(ParsedData parDat, int frame);
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
 

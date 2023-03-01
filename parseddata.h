@@ -22,7 +22,20 @@ public:
         int noise;
     }temporary;
 
-    std::deque<parsed_data_struct> frame_data;
+    struct detObj{
+        int frame;
+        int detObj;
+        float posX;
+        float posY;
+        float posZ;
+        float speed;
+        int snr;
+        int noise;
+    }temp_detObj;
+
+    //std::deque<parsed_data_struct> frame_data;
+    std::vector<detObj> detObj_data;
+    std::vector<std::vector<detObj>> frame_data;
 };
 
 #endif // PARSEDDATA_H

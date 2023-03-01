@@ -60,6 +60,14 @@ void Graphics::drawPoint(int posX,int posY){
     */
 }
 
+void Graphics::show_frame(ParsedData parDat, int frame){
+    //size of graphicsView
+        //*100 for test
+    //take coordinations from parDat for chosen frame
+        //parDat.frame_data
+    //recalculate coordinations
+}
+
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
