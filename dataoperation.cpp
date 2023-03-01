@@ -34,9 +34,11 @@ void DataOperation::read_from_parsed_file(QString path){
             int comma = 0;
             int next_comma = 0;
             while(comma < line.length()){
-                next_comma = line.indexOf(',',comma+1);
                 if(next_comma == -1){
                     break;
+                }
+                else{
+                    next_comma = line.indexOf(',',comma+1);
                 }
                 QString column;
                 while(comma < next_comma){
