@@ -20,7 +20,7 @@ public:
         float speed;
         int snr;
         int noise;
-    };
+    }temporary;
 
     std::deque<parsed_data_struct> frame_data;
 };
