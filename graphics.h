@@ -24,7 +24,8 @@ public:
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem();
 
-    void show_frame(ParsedData parDat, int frame);
+    void show_frame(ParsedData *parDat, int frame);
+    void show_CenterMarker();
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
 

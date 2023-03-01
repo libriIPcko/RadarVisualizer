@@ -30,9 +30,6 @@ void DataOperation::read_from_parsed_file(QString path){
         QTextStream outStream(&output);
         output.open(QIODevice::ReadWrite | QIODevice::Truncate);
         QString line;
-
-        int line_pos = 0;
-
         bool  headerRemove = true;
         while(data.readLineInto(&line)){
            if(headerRemove == true){
@@ -66,7 +63,6 @@ void DataOperation::read_from_parsed_file(QString path){
                    //qDebug() << column << "----";
                    load_toParsedData_dependentOnFrame(column,column_pos);
                    column_pos++;
-
                    column.clear();
                }
            }
@@ -141,15 +137,14 @@ void DataOperation::load_toParsedData_dependentOnFrame(QString data, int column_
             parsed_data->detObj_data.push_back(parsed_data->temp_detObj);
             if(parsed_data->detObj_data.size()>1){
                 if(parsed_data->temp_detObj.frame != parsed_data->detObj_data.at(parsed_data->detObj_data.size()-2).frame){
-                //if(parsed_data->detObj_data.at(parsed_data->detObj_data.size()).frame != parsed_data->detObj_data.at(parsed_data->detObj_data.size()-1).frame){
+                    //if(parsed_data->detObj_data.at(parsed_data->detObj_data.size()).frame != parsed_data->detObj_data.at(parsed_data->detObj_data.size()-1).frame){
                     //The last item of detObj_data is from new frame it have to be removed and
                     //implemented to the new data frame. After second row is detObj_data cleare and appendet for last solved item
                     //Solved in section below.
                     parsed_data->detObj_data.pop_back();
                     parsed_data->frame_data.push_back(parsed_data->detObj_data);
-                    parsed_data->detObj_data.clear();   //This invoke exit code 3 for debuger
+                    parsed_data->detObj_data.clear();   //This invoke exit code 3 for debuger for feedback of processed data use DataOperation::to_CSV()
                     parsed_data->detObj_data.push_back(parsed_data->temp_detObj);
-
                 }
             }
             break;

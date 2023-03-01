@@ -30,7 +30,9 @@ void MainWindow::on_pushButton_activity_released()
     qDebug() << "Test";
     */
     datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
-    datOp->to_CSV(datOp->parsed_data);
+    //datOp->to_CSV(datOp->parsed_data);
+    grTest->show_frame(datOp->parsed_data,0);
+    grTest->show_CenterMarker();
 }
 
 bool MainWindow::event(QEvent *event){

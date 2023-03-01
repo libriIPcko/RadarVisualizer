@@ -45,8 +45,8 @@ void Graphics::drawPoint(int posX,int posY){
     QRandomGenerator Gen_height;
     QPainter paint;
     QRectF rect;
-    rect.setX(2);
-    rect.setY(2);
+    rect.setX(4);
+    rect.setY(4);
     QPointF pos;
     pos.setX(posX);
     pos.setY(posY);
@@ -59,12 +59,27 @@ void Graphics::drawPoint(int posX,int posY){
     tim_move->start();
     */
 }
-
-void Graphics::show_frame(ParsedData parDat, int frame){
+void Graphics::show_CenterMarker(){
+    QPen line_type;
+    line_type.setStyle(Qt::DotLine);
+    line_type.setBrush(Qt::red);
+    QLine vert;
+    vert.setLine(-50,0,50,0);
+    QLine hori;
+    hori.setLine(0,-50,0,50);
+    m_scene->addLine(vert,line_type);
+    m_scene->addLine(hori,line_type);
+}
+void Graphics::show_frame(ParsedData *parDat, int frame){
     //size of graphicsView
         //*100 for test
     //take coordinations from parDat for chosen frame
         //parDat.frame_data
+        for(int i=0;i<parDat->frame_data[frame].size();i++){
+            int posX = parDat->frame_data[frame][i].posX *100;
+            int posY = parDat->frame_data[frame][i].posY *100;
+            drawPoint(posX,posY);
+        }
     //recalculate coordinations
 }
 
