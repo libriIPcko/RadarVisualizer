@@ -24,31 +24,29 @@ void DataOperation::read_from_parsed_file(QString path){
         qDebug() << "Error during open file";
     }
     else{
-        //QString fileData = data.readAll();
-        //qDebug() << fileData;
-        QString line;
-
         //line
         QFile output("C:/Users/bob/Documents/GitHub/RadarVisualizer/tst/outTxt.txt");
         QTextStream outStream(&output);
         output.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        QString line;
+
         while(data.readLineInto(&line)){
-            //comma
-            int comma_step = 0;
-            int posColumn = 0;
-            int pos_in_Line = 0;
-            while(comma_step < line.length()){
-                posColumn = line.indexOf(',',posColumn+1);
-                //posColumn_next = line.indexOf(',',posColumn+1);
-                QString out;
-                while(pos_in_Line<posColumn){
-                    out.append(line.at(pos_in_Line));
-                    pos_in_Line++;
+            int comma = 0;
+            int next_comma = 0;
+            while(comma < line.length()){
+                next_comma = line.indexOf(',',comma+1);
+                if(next_comma == -1){
+                    break;
                 }
-                qDebug() << out << "\n";
-                outStream << out << "\n";
-                comma_step++;
+                QString column;
+                while(comma < next_comma){
+                    column.append(line.at(comma));
+                    comma++;
+                }
+                qDebug() << column << "----";
+                column.clear();
             }
         }
+
     }
 }
