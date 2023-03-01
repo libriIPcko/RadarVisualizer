@@ -5,6 +5,8 @@
 #include <QResizeEvent>
 #include <QEvent>
 #include <graphics.h>
+#include <dataoperation.h>
+#include <parseddata.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,8 +21,11 @@ public:
     ~MainWindow();
     bool event(QEvent *event);
     QGraphicsScene *scene = new QGraphicsScene();
+
+
     //Graphics grTest(scene);
     Graphics *grTest = new Graphics(scene);
+    DataOperation *datOp = new DataOperation();
 
     int positionX = 0;
     int positionY = 0;

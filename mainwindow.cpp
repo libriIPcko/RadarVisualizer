@@ -23,10 +23,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_activity_released()
 {
     //grTest->drawPoint();
+    /*
     grTest->drawPoint(positionX,positionY);
     positionX = positionX + 10;
     positionY = positionY + 10;
     qDebug() << "Test";
+    */
+    datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
 }
 
 bool MainWindow::event(QEvent *event){
