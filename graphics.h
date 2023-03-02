@@ -15,7 +15,7 @@ class Graphics : QObject
 {
     Q_OBJECT
 public:
-    Graphics(QGraphicsScene *scene);
+    Graphics(QGraphicsScene *scene, ParsedData *parDat);
     void drawPoint();
     void drawPoint(int posX,int posY);
     void drawSomething();
@@ -24,13 +24,20 @@ public:
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem();
 
+    QTimer *tim_showData;
+    void showData(int startFrame, int endFrame,int fps);
     void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
+    ParsedData *m_parDat = new ParsedData();
+
+    int actualFrame = 0;
+    int endFrame = 0;
 
 private slots:
     void on_move_timeout();
+    void on_showData_next();
 private: signals:
     void timeout();
 

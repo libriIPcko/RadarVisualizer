@@ -108,6 +108,7 @@ void Graphics::on_showData_next(){
     }
     else{
         actualFrame++;
+        emit actualFrame_refresh;
     }
     show_CenterMarker();
 

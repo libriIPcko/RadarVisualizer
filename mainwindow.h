@@ -24,8 +24,9 @@ public:
 
 
     //Graphics grTest(scene);
-    Graphics *grTest = new Graphics(scene);
     DataOperation *datOp = new DataOperation();
+    Graphics *grTest = new Graphics(scene,datOp->parsed_data);
+
 
     int positionX = 0;
     int positionY = 0;
