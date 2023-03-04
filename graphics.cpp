@@ -52,7 +52,7 @@ void Graphics::drawPoint(int posX,int posY){
     pos.setY(posY);
     rect.moveTo(pos);
     ell = m_scene->addEllipse(rect);
-    qDebug() << ell->pos();
+    //qDebug() << ell->pos();
     /*
     connect(tim_move,SIGNAL(timeout()),SLOT(on_move_timeout()));
     tim_move->setInterval(400);
@@ -75,7 +75,7 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         //*100 for test
     //take coordinations from parDat for chosen frame
         //parDat.frame_data
-        for(int i=0;i<parDat->frame_data[frame].size();i++){
+        for(int i=0;i < (int)parDat->frame_data[frame].size();i++){
             int posX = parDat->frame_data[frame][i].posX *100;
             int posY = parDat->frame_data[frame][i].posY *100;
             drawPoint(posX,posY);
@@ -88,14 +88,18 @@ void Graphics::showData(int start_Frame, int end_Frame,int fps){
     endFrame = end_Frame;
     tim_showData = new QTimer;
     connect(tim_showData,SIGNAL(timeout()),this,SLOT(on_showData_next()));
-    //(1/fps)*100
-    tim_showData->setInterval(400);
-    tim_showData->start(400);
+    float interval = 10000/fps;
+    //float interval = 678.123456;
+    qDebug() << interval << "[ms]";
+    tim_showData->setInterval(interval);
+    tim_showData->start();
 }
+
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
 void Graphics::on_showData_next(){
+    qDebug() << "interval: " << tim_showData->interval() << "[ms]";
     m_scene->clear();
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
         int posX = m_parDat->frame_data[actualFrame][i].posX *100;
@@ -110,5 +114,4 @@ void Graphics::on_showData_next(){
         actualFrame++;
     }
     show_CenterMarker();
-
 }

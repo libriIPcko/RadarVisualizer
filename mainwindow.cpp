@@ -8,10 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->graphicsView->setScene(scene);
-
     grTest->bound_max_height = ui->centralwidget->size().height();
     grTest->bound_max_width = ui->centralwidget->size().width();
-
 }
 
 MainWindow::~MainWindow()
@@ -33,7 +31,7 @@ void MainWindow::on_pushButton_activity_released()
     //datOp->to_CSV(datOp->parsed_data);
     //grTest->show_frame(datOp->parsed_data,0);
     grTest->show_CenterMarker();
-    grTest->showData(0,180,2);
+    grTest->showData(0,180,20);
 }
 
 bool MainWindow::event(QEvent *event){

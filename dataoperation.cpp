@@ -123,7 +123,7 @@ void DataOperation::load_toParsedData_dependentOnFrame(QString data, int column_
             parsed_data->temp_detObj.posY = data.toFloat();
             break;
         case 4: //posZ
-            qDebug() << "for 2D it is useless column";
+            //qDebug() << "for 2D it is useless column";
             parsed_data->temp_detObj.posZ = data.toFloat();
             break;
         case 5: //speed
