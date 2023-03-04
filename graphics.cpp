@@ -43,7 +43,11 @@ void Graphics::drawPoint(){
 void Graphics::drawPoint(int posX,int posY){
     QRandomGenerator Gen_width;
     QRandomGenerator Gen_height;
-    QPainter paint;
+    //QPainter paint;
+    QPen pen;
+    pen.setColor(Qt::red);
+    QBrush brush;
+    brush.setColor(Qt::red);
     QRectF rect;
     rect.setX(4);
     rect.setY(4);
@@ -51,7 +55,7 @@ void Graphics::drawPoint(int posX,int posY){
     pos.setX(posX);
     pos.setY(posY);
     rect.moveTo(pos);
-    ell = m_scene->addEllipse(rect);
+    ell = m_scene->addEllipse(rect,pen,brush);
     //qDebug() << ell->pos();
     /*
     connect(tim_move,SIGNAL(timeout()),SLOT(on_move_timeout()));
@@ -66,10 +70,58 @@ void Graphics::show_CenterMarker(){
     QLine vert;
     vert.setLine(-50,0,50,0);
     QLine hori;
-    hori.setLine(0,-50,0,50);
+    hori.setLine(0,0,0,50);
     m_scene->addLine(vert,line_type);
     m_scene->addLine(hori,line_type);
 }
+
+//@direction y or x
+//@maxVal  == maximal value of direction weight or height
+//@step    == step of line on belonging to direction
+void Graphics::show_Axis(char direction,int maxVal, int step){
+    QPen line_type;
+    line_type.setColor(Qt::gray);
+    line_type.setStyle(Qt::DotLine);
+    QLine line;
+    //Draw y axis
+    if(direction == 'y'){
+        int i = 0;
+        while(i<maxVal){
+            //x1 y1 x2 y2
+            line.setLine(-10,i,10,i);
+            i = i + step;
+            m_scene->addLine(line,line_type);
+        }
+    }
+    //Draw x axis
+    else if(direction == 'x'){
+        int i = maxVal*-1;
+        while(i<maxVal){
+            //x1 y1 x2 y2
+            line.setLine(i,-10,i,10);
+            i = i + step;
+            m_scene->addLine(line,line_type);
+        }
+    }
+    //Draw booth axis
+    else{
+        int i = 0;
+        while(i<maxVal){
+            //x1 y1 x2 y2
+            line.setLine(maxVal*-1,i,maxVal,i);
+            i = i + step;
+            m_scene->addLine(line,line_type);
+        }
+        i = maxVal*-1;
+        while(i<maxVal){
+            //x1 y1 x2 y2
+            line.setLine(i,0,i,maxVal);
+            i = i + step;
+            m_scene->addLine(line,line_type);
+        }
+    }
+}
+
 void Graphics::show_frame(ParsedData *parDat, int frame){
     //size of graphicsView
         //*100 for test
@@ -82,6 +134,7 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         }
     //recalculate coordinations
 }
+
 
 void Graphics::showData(int start_Frame, int end_Frame,int fps){
     actualFrame = start_Frame;
@@ -113,5 +166,7 @@ void Graphics::on_showData_next(){
     else{
         actualFrame++;
     }
+    show_Axis('a',250,10);
     show_CenterMarker();
+
 }
