@@ -81,7 +81,8 @@ void Graphics::show_CenterMarker(){
 void Graphics::show_Axis(char direction,QSize size, int step){
     QPen line_type;
     line_type.setColor(Qt::gray);
-    line_type.setStyle(Qt::DotLine);
+    line_type.setStyle(Qt::SolidLine);
+    line_type.setWidth(1);
     QLine line;
     //Draw y axis
     int maxVal = size.height();

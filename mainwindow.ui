@@ -39,7 +39,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -176,16 +176,6 @@
      <attribute name="title">
       <string>DatOp</string>
      </attribute>
-     <widget class="QTreeView" name="file_locat_treeView">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>481</width>
-        <height>391</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
    </widget>
   </widget>

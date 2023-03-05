@@ -11,12 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
     grTest->bound_max_height = ui->centralwidget->size().height();
     grTest->bound_max_width = ui->centralwidget->size().width();
 
-    //rootPath->setRootPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData");
-    rootPath->setRootPath("C:/Users/bob/Documents");
-    ui->file_locat_treeView->setModel(rootPath);
+
 
     datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
     ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
+    ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
+    ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
 }
 
 MainWindow::~MainWindow()
@@ -101,7 +101,16 @@ void MainWindow::on_play_pushButton_2_released()
 
 void MainWindow::on_actual_frame_spinBox_valueChanged(int arg1)
 {
+    ui->actual_framehorizontalSlider->setValue(arg1);
     grTest->show_frame(arg1);
+    grTest->show_Axis('a',ui->graphicsView->size(),10);
+}
+
+
+void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
+{
+    ui->actual_frame_spinBox->setValue(position);
+    grTest->show_frame(position);
     grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
 

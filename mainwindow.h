@@ -21,7 +21,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     bool event(QEvent *event);
-    QFileSystemModel *rootPath = new QFileSystemModel;
+
     QGraphicsScene *scene = new QGraphicsScene();
 
 
@@ -49,6 +49,8 @@ private slots:
     void on_play_pushButton_2_released();
 
     void on_actual_frame_spinBox_valueChanged(int arg1);
+
+    void on_actual_framehorizontalSlider_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;
