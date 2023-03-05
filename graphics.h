@@ -10,7 +10,7 @@
 #include <dataoperation.h>
 #include <parseddata.h>
 
-class Graphics : QObject
+class Graphics : public QObject
 
 {
     Q_OBJECT
@@ -26,6 +26,9 @@ public:
 
     QTimer *tim_showData;
     void showData(int startFrame, int endFrame,int fps);
+    void pause();
+    void play();
+    void show_frame(int frame);
     void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
     void show_Axis(char direction,QSize size, int step);
@@ -43,6 +46,8 @@ private slots:
     void on_showData_next();
 private: signals:
     void timeout();
+public: signals:
+    void frame(int actualFrame);
 
 };
 

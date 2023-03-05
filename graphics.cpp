@@ -138,6 +138,16 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         }
     //recalculate coordinations
 }
+void Graphics::show_frame(int frame){
+    m_scene->clear();
+    for(int i=0;i < (int)m_parDat->frame_data[frame].size();i++){
+        int posX = m_parDat->frame_data[frame][i].posX *100;
+        int posY = m_parDat->frame_data[frame][i].posY *100;
+        drawPoint(posX,posY);
+    }
+    show_Axis('a',viewWidget,10);
+    show_CenterMarker();
+}
 
 
 void Graphics::showData(int start_Frame, int end_Frame,int fps){
@@ -151,12 +161,22 @@ void Graphics::showData(int start_Frame, int end_Frame,int fps){
     tim_showData->setInterval(interval);
     tim_showData->start();
 }
+void Graphics::pause(){
+    tim_showData->stop();
+}
+
+void Graphics::play(){
+    tim_move->setInterval(500);
+    qDebug() << "In progress the FPS value is not shared with this method";
+    tim_move->start();
+
+}
 
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
 void Graphics::on_showData_next(){
-    qDebug() << "interval: " << tim_showData->interval() << "[ms]";
+    //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
     m_scene->clear();
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
         int posX = m_parDat->frame_data[actualFrame][i].posX *100;
@@ -172,5 +192,7 @@ void Graphics::on_showData_next(){
     }
     show_Axis('a',viewWidget,10);
     show_CenterMarker();
+    emit frame(actualFrame-1);
+
 
 }
