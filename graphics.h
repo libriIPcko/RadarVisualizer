@@ -28,7 +28,9 @@ public:
     void showData(int startFrame, int endFrame,int fps);
     void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
-    void show_Axis(char direction,int maxVal, int step);
+    void show_Axis(char direction,QSize size, int step);
+
+    QSize viewWidget;
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
     ParsedData *m_parDat = new ParsedData();

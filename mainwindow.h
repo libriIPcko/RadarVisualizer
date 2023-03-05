@@ -37,7 +37,13 @@ private slots:
     void on_pushButton_activity_released();
     void on_pushButton_released();
 
+    void on_min_frame_spinBox_valueChanged(int arg1);
+
+    void on_max_frame_spinBox_2_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
+    int min_frame_start = 0;
+    int max_frame_start = 0;
 };
 #endif // MAINWINDOW_H

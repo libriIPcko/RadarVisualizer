@@ -68,9 +68,9 @@ void Graphics::show_CenterMarker(){
     line_type.setStyle(Qt::DotLine);
     line_type.setBrush(Qt::red);
     QLine vert;
-    vert.setLine(-50,0,50,0);
+    vert.setLine(viewWidget.width()*-1,0,viewWidget.width(),0);
     QLine hori;
-    hori.setLine(0,0,0,50);
+    hori.setLine(0,0,0,viewWidget.height());
     m_scene->addLine(vert,line_type);
     m_scene->addLine(hori,line_type);
 }
@@ -78,12 +78,13 @@ void Graphics::show_CenterMarker(){
 //@direction y or x
 //@maxVal  == maximal value of direction weight or height
 //@step    == step of line on belonging to direction
-void Graphics::show_Axis(char direction,int maxVal, int step){
+void Graphics::show_Axis(char direction,QSize size, int step){
     QPen line_type;
     line_type.setColor(Qt::gray);
     line_type.setStyle(Qt::DotLine);
     QLine line;
     //Draw y axis
+    int maxVal = size.height();
     if(direction == 'y'){
         int i = 0;
         while(i<maxVal){
@@ -95,6 +96,7 @@ void Graphics::show_Axis(char direction,int maxVal, int step){
     }
     //Draw x axis
     else if(direction == 'x'){
+        int maxVal = size.width();
         int i = maxVal*-1;
         while(i<maxVal){
             //x1 y1 x2 y2
@@ -105,6 +107,7 @@ void Graphics::show_Axis(char direction,int maxVal, int step){
     }
     //Draw booth axis
     else{
+        int maxVal = size.height();
         int i = 0;
         while(i<maxVal){
             //x1 y1 x2 y2
@@ -112,6 +115,7 @@ void Graphics::show_Axis(char direction,int maxVal, int step){
             i = i + step;
             m_scene->addLine(line,line_type);
         }
+        maxVal = size.width();
         i = maxVal*-1;
         while(i<maxVal){
             //x1 y1 x2 y2
@@ -166,7 +170,7 @@ void Graphics::on_showData_next(){
     else{
         actualFrame++;
     }
-    show_Axis('a',250,10);
+    show_Axis('a',viewWidget,10);
     show_CenterMarker();
 
 }
