@@ -120,6 +120,9 @@ while (totalBytesParsed < readNumBytes):
         if (numFramesParsed == 1):
             #democsvfile = open('mmw_demo_output.csv', 'w', newline='')
             democsvfile = open(sys.argv[2], 'w', newline='')
+            print('PathOut: ')
+            print(sys.argv[2])
+            #democsvfile = open('C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/outsddsFile.csv', 'w', newline='')
             #democsvfile = open('C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/mmw__output_tst.csv', 'w', newline='')
 
             #The original part of Code

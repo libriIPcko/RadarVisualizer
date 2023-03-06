@@ -193,7 +193,7 @@ void Graphics::on_showData_next(){
     }
     show_Axis('a',viewWidget,10);
     show_CenterMarker();
-    emit frame(actualFrame-1);
+    emit frame_sig(actualFrame-1);
 
 
 }

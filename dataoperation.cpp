@@ -39,7 +39,7 @@ void DataOperation::call_py_parse(QString path){
             + QString::number(currentDateTime.time().second()) +".csv";
     QString absoluteParsedPath = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/" + formatedSuffixPath;
     qDebug() << "absoluteParsedPath: " << absoluteParsedPath;
-    QStringList params = QStringList() << "mmw_demo_example_script.py" << path << formatedSuffixPath;
+    QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
 
     QProcess *process = new QProcess();
     process->startDetached(command, params, path_py);

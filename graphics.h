@@ -47,7 +47,7 @@ private slots:
 private: signals:
     void timeout();
 public: signals:
-    void frame(int actualFrame);
+    void frame_sig(int actualFrame);
 
 };
 

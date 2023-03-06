@@ -41,6 +41,9 @@ public:
     QListWidgetItem *item = new QListWidgetItem();
     QListWidgetItem *item_datFile = new QListWidgetItem();
     QListWidgetItem *item_csvFile = new QListWidgetItem();
+
+    void update_csvFiles_listWidget();
+    void update_datFiles_listWidget();
 private: signals:
     void screenchanged();
 

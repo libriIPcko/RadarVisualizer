@@ -15,7 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->csvFiles_listWidget->setVisible(false);
     ui->datFiles_listWidget->setVisible(false);
     ui->typeofLW_Label->setVisible(false);
-    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+
+    //update_csvFiles_listWidget();
+    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->csvFiles_listWidget->addItem(item_temp);
+            item_csvFile = item_temp;
+        }
+    }
+    //update_datFiles_listWidget();
+     dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -28,7 +42,38 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
 
-    dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::update_datFiles_listWidget(){
+    qDebug() << item_datFile->listWidget()->size();
+    if(item_datFile->listWidget()->size().isEmpty() == false){
+        item_datFile->listWidget()->clear();
+    }
+    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->datFiles_listWidget->addItem(item_temp);
+            item_datFile = item_temp;
+        }
+    }
+}
+
+void MainWindow::update_csvFiles_listWidget(){
+    qDebug() << item_csvFile->listWidget()->size();
+    if(item_csvFile->listWidget()->size().isEmpty() == false){
+        item_csvFile->listWidget()->clear();
+    }
+
+    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -39,16 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
             item_csvFile = item_temp;
         }
     }
-
-
-
 }
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
 
 void MainWindow::on_pushButton_activity_released()
 {
@@ -64,7 +100,7 @@ void MainWindow::on_pushButton_activity_released()
     //grTest->show_frame(datOp->parsed_data,0);
     grTest->show_CenterMarker();
     grTest->showData(ui->min_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
-    connect(grTest,SIGNAL(frame(int)),this,SLOT(on_frame_graphic_refresh(int)));
+    connect(grTest,SIGNAL(frame_sig(int)),this,SLOT(on_frame_graphic_refresh(int)));
 }
 
 void MainWindow::on_frame_graphic_refresh(int actualFrame){
@@ -150,13 +186,14 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
     }
     else{
         qDebug() << "path: " << absolutePath;
-        //qDebug() << datOp->call_py_parse_out(absolutePath);
-        //qDebug() << datOp->call_py_parse_out(datOp->defaulthPath_inputDAT);
 
-        //datOp->call_py();
-        datOp->call_py_parse(datOp->defaulthPath_inputDAT);
-        //datOp->call_py_parse_out(datOp->defaulthPath_inputDAT);
 
+
+                //POSITION FOR IMPLEMENTATION ALGORITHM
+            //Clear parsedData
+        datOp->parsed_data->frame_data.clear();
+            //Algorithm: parse, loadFromParseToTLVtempDat
+        datOp->call_py_parse(datOp->defaulthPath_inputDAT); //Here have to be modification to seeking actual file
         /*
         datOp->read_from_parsed_file(absolutePath);
         //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
@@ -178,6 +215,8 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
         qDebug() << "It was chosen wrong file";
     }
     else{
+        //Clear parsedData
+        datOp->parsed_data->frame_data.clear();
         qDebug() << absolutePath;
         datOp->read_from_parsed_file(absolutePath);
         //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
@@ -192,12 +231,13 @@ void MainWindow::on_checkBox_toggled(bool checked)
 {
     ui->typeofLW_Label->setVisible(true);
     if(checked == true){
+        update_datFiles_listWidget();
         ui->typeofLW_Label->setText("RAW radar data file");
         ui->csvFiles_listWidget->setVisible(false);
         ui->datFiles_listWidget->setVisible(true);
     }
     else{
-
+        update_csvFiles_listWidget();
         ui->typeofLW_Label->setText("Parsed csv data");
         ui->csvFiles_listWidget->setVisible(true);
         ui->datFiles_listWidget->setVisible(false);
