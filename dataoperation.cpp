@@ -1,22 +1,52 @@
 #include "dataoperation.h"
+#include "qdatetime.h"
 #include "qdebug.h"
 
 DataOperation::DataOperation()
 {
 
 }
+void DataOperation::call_py(){
 
+    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+    QString  command("python");
+    QStringList params = QStringList() << "mmw_demo_example_script.py";
+    QProcess *process = new QProcess();
+    process->startDetached(command, params, path_py);
+    process->waitForFinished();
+    process->close();
+}
 
 void DataOperation::call_py_parse(QString path){
-    QString path_py = "C:/Users/bob/Documents/RadarVisualizer/parse_script";
+    qDebug() << path;
+    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
     QString  command("python");
-    QStringList params = QStringList() << "mmw_demo_example_script.py   " << path;
+    /*
+    QDate actualDate;
+    QTime actualTime;
+    QString date = QString::number(actualDate.day()) + "." + QString::number(actualDate.month()) + "__";
+    QString time = QString::number(actualTime.hour()) +":"+ QString::number(actualTime.minute()) + ":" + QString::number(actualTime.minute());
+    QString formatedPath = path + "/" + "parsOut" + "_" + date + time;
+    */
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString formatedSuffixPath =
+            "parsOut_"
+            + QString::number(currentDateTime.date().day())+"."
+            + QString::number(currentDateTime.date().month())
+            + "__"
+            + QString::number(currentDateTime.time().hour()) +"_"
+            + QString::number(currentDateTime.time().minute()) +"_"
+            + QString::number(currentDateTime.time().second()) +".csv";
+    QString absoluteParsedPath = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/" + formatedSuffixPath;
+    qDebug() << "absoluteParsedPath: " << absoluteParsedPath;
+    QStringList params = QStringList() << "mmw_demo_example_script.py" << path << formatedSuffixPath;
 
     QProcess *process = new QProcess();
     process->startDetached(command, params, path_py);
     process->waitForFinished();
     process->close();
 }
+
 
 void DataOperation::read_from_parsed_file(QString path){
     QFile file(path);

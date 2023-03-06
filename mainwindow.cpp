@@ -12,11 +12,36 @@ MainWindow::MainWindow(QWidget *parent)
     grTest->bound_max_width = ui->centralwidget->size().width();
 
 
+    ui->csvFiles_listWidget->setVisible(false);
+    ui->datFiles_listWidget->setVisible(false);
+    ui->typeofLW_Label->setVisible(false);
+    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->datFiles_listWidget->addItem(item_temp);
+            item_datFile = item_temp;
+        }
+    }
 
-    datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
-    ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
-    ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
-    ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
+
+    dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->csvFiles_listWidget->addItem(item_temp);
+            item_csvFile = item_temp;
+        }
+    }
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -112,5 +137,70 @@ void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
     ui->actual_frame_spinBox->setValue(position);
     grTest->show_frame(position);
     grTest->show_Axis('a',ui->graphicsView->size(),10);
+}
+
+
+void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFile)
+{
+    auto path = item_datFile->data(Qt::UserRole).toString();
+    auto fileName = ui->datFiles_listWidget->currentItem()->text();
+    QString absolutePath = path+"/"+fileName;
+    if(absolutePath.contains(".cfg") == true  || absolutePath.contains(".csv") == true){
+        qDebug() << "It was chosen configuration file";
+    }
+    else{
+        qDebug() << "path: " << absolutePath;
+        //qDebug() << datOp->call_py_parse_out(absolutePath);
+        //qDebug() << datOp->call_py_parse_out(datOp->defaulthPath_inputDAT);
+
+        //datOp->call_py();
+        datOp->call_py_parse(datOp->defaulthPath_inputDAT);
+        //datOp->call_py_parse_out(datOp->defaulthPath_inputDAT);
+
+        /*
+        datOp->read_from_parsed_file(absolutePath);
+        //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
+        ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
+        ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
+        ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
+        */
+    }
+
+}
+
+
+void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFile)
+{
+    auto path = item_csvFile->data(Qt::UserRole).toString();
+    auto fileName = ui->csvFiles_listWidget->currentItem()->text();
+    QString absolutePath = path+"/"+fileName;
+    if(absolutePath.contains(".cfg") == true || absolutePath.contains(".dat") == true){
+        qDebug() << "It was chosen wrong file";
+    }
+    else{
+        qDebug() << absolutePath;
+        datOp->read_from_parsed_file(absolutePath);
+        //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
+        ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
+        ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
+        ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
+    }
+}
+
+
+void MainWindow::on_checkBox_toggled(bool checked)
+{
+    ui->typeofLW_Label->setVisible(true);
+    if(checked == true){
+        ui->typeofLW_Label->setText("RAW radar data file");
+        ui->csvFiles_listWidget->setVisible(false);
+        ui->datFiles_listWidget->setVisible(true);
+    }
+    else{
+
+        ui->typeofLW_Label->setText("Parsed csv data");
+        ui->csvFiles_listWidget->setVisible(true);
+        ui->datFiles_listWidget->setVisible(false);
+    }
 }
 

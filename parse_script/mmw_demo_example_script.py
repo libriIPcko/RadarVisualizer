@@ -56,6 +56,7 @@ import subprocess
 # get the captured file name (obtained from Visualizer via 'Record Start')
 #own added objects
 capturedFileName = sys.argv[1]
+#capturedFileName = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/AWR1843_captured.dat"
 #capturedFileName = "C:/ti/mmwave_sdk_03_06_00_00-LTS/packages/ti/demo/xwr18xx/mmw/RecordedData/AWR1843_captured.dat"
 #if (len(sys.argv) > 1):
 #    capturedFileName=sys.argv[1]
@@ -117,7 +118,10 @@ while (totalBytesParsed < readNumBytes):
         # For example, dump all S/W objects to a csv file
         import csv
         if (numFramesParsed == 1):
-            democsvfile = open('mmw_demo_output.csv', 'w', newline='')
+            #democsvfile = open('mmw_demo_output.csv', 'w', newline='')
+            democsvfile = open(sys.argv[2], 'w', newline='')
+            #democsvfile = open('C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/mmw__output_tst.csv', 'w', newline='')
+
             #The original part of Code
                 #demoOutputWriter = csv.writer(democsvfile, delimiter=',', quotechar='', quoting=csv.QUOTE_NONE)
             #Manual modification

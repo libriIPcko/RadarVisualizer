@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include <QResizeEvent>
 #include <QEvent>
-#include <QFileSystemModel>
+#include <QListWidgetItem>
+#include <QDir>
+#include <QFileInfo>
+
+
 #include <graphics.h>
 #include <dataoperation.h>
 #include <parseddata.h>
@@ -32,6 +36,11 @@ public:
 
     int positionX = 0;
     int positionY = 0;
+
+    //Second Tab
+    QListWidgetItem *item = new QListWidgetItem();
+    QListWidgetItem *item_datFile = new QListWidgetItem();
+    QListWidgetItem *item_csvFile = new QListWidgetItem();
 private: signals:
     void screenchanged();
 
@@ -51,6 +60,12 @@ private slots:
     void on_actual_frame_spinBox_valueChanged(int arg1);
 
     void on_actual_framehorizontalSlider_sliderMoved(int position);
+
+    void on_datFiles_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_csvFiles_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_checkBox_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
