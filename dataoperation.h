@@ -17,6 +17,7 @@ public:
     DataOperation();
     void call_py();
     void call_py_parse(QString path);
+    QString call_py_parse_outFile(QString path);
 
     void read_from_parsed_file(QString path);
     void load_toParsedData_dependentOnFrame(QString data, int column_pos);

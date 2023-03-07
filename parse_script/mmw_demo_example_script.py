@@ -42,7 +42,7 @@
 #   2. This example script also outputs the detected point cloud data in mmw_demo_output.csv 
 #      to showcase how to use the output of parser_one_mmw_demo_output_packet
 # ****************************************************************************
-
+import time
 import os
 import sys
 # import the parser function 
@@ -70,9 +70,9 @@ capturedFileName = sys.argv[1]
 # Read the entire file 
 fp = open(capturedFileName,'rb')
 readNumBytes = os.path.getsize(capturedFileName)
-print("readNumBytes: ", readNumBytes)
+#print("readNumBytes: ", readNumBytes)
 allBinData = fp.read()
-print("allBinData: ", allBinData[0], allBinData[1], allBinData[2], allBinData[3])
+#print("allBinData: ", allBinData[0], allBinData[1], allBinData[2], allBinData[3])
 fp.close()
 
 # init local variables
@@ -103,11 +103,11 @@ while (totalBytesParsed < readNumBytes):
     detectedNoise_array = parser_one_mmw_demo_output_packet(allBinData[totalBytesParsed::1], readNumBytes-totalBytesParsed)
 
     # Check the parser result
-    print ("Parser result: ", parser_result)
+    #print ("Parser result: ", parser_result)
     if (parser_result == 0):
         totalBytesParsed += (headerStartIndex+totalPacketNumBytes)
         numFramesParsed+=1
-        print("totalBytesParsed: ", totalBytesParsed)
+        #print("totalBytesParsed: ", totalBytesParsed)
         ##################################################################################
         # TODO: use the arrays returned by above parser as needed. 
         # For array dimensions, see help(parser_one_mmw_demo_output_packet)
@@ -120,8 +120,8 @@ while (totalBytesParsed < readNumBytes):
         if (numFramesParsed == 1):
             #democsvfile = open('mmw_demo_output.csv', 'w', newline='')
             democsvfile = open(sys.argv[2], 'w', newline='')
-            print('PathOut: ')
-            print(sys.argv[2])
+            #print('PathOut: ')
+            #print(sys.argv[2])
             #democsvfile = open('C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/outsddsFile.csv', 'w', newline='')
             #democsvfile = open('C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/mmw__output_tst.csv', 'w', newline='')
 
@@ -146,5 +146,7 @@ while (totalBytesParsed < readNumBytes):
         # error in parsing; exit the loop
         break
 
+democsvfile.close()
+
 # All processing done; Exit
-print("numFramesParsed: ", numFramesParsed)
+#print("numFramesParsed: ", numFramesParsed)

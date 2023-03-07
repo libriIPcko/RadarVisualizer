@@ -186,16 +186,19 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
     }
     else{
         qDebug() << "path: " << absolutePath;
-
-
-
                 //POSITION FOR IMPLEMENTATION ALGORITHM
             //Clear parsedData
         datOp->parsed_data->frame_data.clear();
             //Algorithm: parse, loadFromParseToTLVtempDat
-        datOp->call_py_parse(datOp->defaulthPath_inputDAT); //Here have to be modification to seeking actual file
+        //datOp->call_py_parse(datOp->defaulthPath_inputDAT); //Here have to be modification to seeking actual file
+        QString finalPath = datOp->call_py_parse_outFile(absolutePath);
+        QFile csvFile(finalPath);
+        while(csvFile.exists() == false){
+
+        }
         /*
-        datOp->read_from_parsed_file(absolutePath);
+        datOp->read_from_parsed_file(finalPath);
+        //datOp->read_from_parsed_file(absolutePath);
         //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
         ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
         ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
