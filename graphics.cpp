@@ -6,6 +6,23 @@ Graphics::Graphics(QGraphicsScene *scene, ParsedData *parDat) : m_scene(scene), 
 
 }
 
+bool Graphics::event(QEvent *event){
+    qDebug() << event->type();
+    if(event->type() == QEvent::Resize){
+        qDebug() << "view was resized" << event->type() ;
+        return true;
+    }
+    else if(event->type() == QEvent::GraphicsSceneMouseRelease){
+        qDebug() << "MB was released";
+        return true;
+    }
+    else if(event->type() == QEvent::GraphicsSceneMouseDoubleClick){
+        qDebug() << "Double-click";
+        return true;
+    }
+    return Graphics::event(event);
+}
+
 void Graphics::find_MinMax_pos(){
     for(int i=0;i<m_parDat->frame_data.size();i++){
         for(int j=0;j<m_parDat->frame_data[i].size();j++){

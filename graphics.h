@@ -6,6 +6,7 @@
 #include "QPainter"
 #include <QRandomGenerator>
 #include <QTimer>
+#include <QEvent>
 
 #include <dataoperation.h>
 #include <parseddata.h>
@@ -38,6 +39,7 @@ public:
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
     ParsedData *m_parDat = new ParsedData();
+    bool event(QEvent *event);
 
     int actualFrame = 0;
     int endFrame = 0;

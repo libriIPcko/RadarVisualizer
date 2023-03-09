@@ -119,7 +119,7 @@ bool MainWindow::event(QEvent *event){
         ui->graphicsView->resize(ax-80,ay-80);
         ui->graphicsView->move(30,40);
 
-        qDebug() << "view was resized" << ui->centralwidget->size();
+        //qDebug() << "GraphicsView was resized" << ui->graphicsView->size();
 
         return true;
     }
