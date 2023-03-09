@@ -226,6 +226,10 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
         ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
         ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
         ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
+
+        //setup maximal dimension of view
+        grTest->find_MinMax_pos();
+
     }
 }
 

@@ -32,6 +32,7 @@ public:
     void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
     void show_Axis(char direction,QSize size, int step);
+    void find_MinMax_pos();
 
     QSize viewWidget;
 private:
@@ -40,6 +41,11 @@ private:
 
     int actualFrame = 0;
     int endFrame = 0;
+
+    float min_pos_Y = 0;
+    float min_pos_X = 0;
+    float max_pos_Y = 0;
+    float max_pos_X = 0;
 
 private slots:
     void on_move_timeout();

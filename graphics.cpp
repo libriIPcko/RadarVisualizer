@@ -6,6 +6,26 @@ Graphics::Graphics(QGraphicsScene *scene, ParsedData *parDat) : m_scene(scene), 
 
 }
 
+void Graphics::find_MinMax_pos(){
+    for(int i=0;i<m_parDat->frame_data.size();i++){
+        for(int j=0;j<m_parDat->frame_data[i].size();j++){
+            if(max_pos_X < m_parDat->frame_data[i][j].posX){
+                max_pos_X = m_parDat->frame_data[i][j].posX;
+            }
+            if(max_pos_Y < m_parDat->frame_data[i][j].posY){
+                max_pos_Y = m_parDat->frame_data[i][j].posY;
+            }
+            if(min_pos_X > m_parDat->frame_data[i][j].posX){
+                min_pos_X = m_parDat->frame_data[i][j].posX;
+            }
+            if(min_pos_Y > m_parDat->frame_data[i][j].posY){
+                min_pos_Y = m_parDat->frame_data[i][j].posY;
+            }
+        }
+    }
+    qDebug() << "Min/Max X: " << min_pos_X << "/" << max_pos_X;
+    qDebug() << "Min/Max Y: " << min_pos_Y << "/" << max_pos_Y;
+}
 
 void Graphics::drawSomething(){
     QPainter paint;
