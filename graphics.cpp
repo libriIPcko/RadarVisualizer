@@ -79,8 +79,10 @@ void Graphics::show_CenterMarker(){
 //@maxVal  == maximal value of direction weight or height
 //@step    == step of line on belonging to direction
 void Graphics::show_Axis(char direction,QSize size, int step){
+    QColor line_color;
+    line_color.setRgbF(372,366,363,0.1);
     QPen line_type;
-    line_type.setColor(Qt::gray);
+    line_type.setColor(line_color);
     line_type.setStyle(Qt::SolidLine);
     line_type.setWidth(1);
     QLine line;
@@ -180,8 +182,8 @@ void Graphics::on_showData_next(){
     //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
     m_scene->clear();
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
-        int posX = m_parDat->frame_data[actualFrame][i].posX *100;
-        int posY = m_parDat->frame_data[actualFrame][i].posY *100;
+        int posX = m_parDat->frame_data[actualFrame][i].posX *10;
+        int posY = m_parDat->frame_data[actualFrame][i].posY *10;
         drawPoint(posX,posY);
     }
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){

@@ -146,7 +146,7 @@ while (totalBytesParsed < readNumBytes):
         # error in parsing; exit the loop
         break
 
-democsvfile.close()
+#democsvfile.close()
 
 # All processing done; Exit
 #print("numFramesParsed: ", numFramesParsed)
