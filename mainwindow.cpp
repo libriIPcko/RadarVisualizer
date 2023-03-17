@@ -230,6 +230,9 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
         //setup maximal dimension of view
         grTest->find_MinMax_pos();
 
+        datOp->DatUnification_v0(datOp->parsed_data,1);
+        datOp->to_CSV_UnificatedData_v0(datOp->parsed_data);
+
     }
 }
 

@@ -36,6 +36,9 @@ public:
     //std::deque<parsed_data_struct> frame_data;
     std::vector<detObj> detObj_data;
     std::vector<std::vector<detObj>> frame_data;
+
+    //For Data Unification
+    std::vector<std::vector<std::vector<int>>> unified_Points;
 };
 
 #endif // PARSEDDATA_H

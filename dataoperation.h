@@ -26,7 +26,11 @@ public:
     QString defaulthPath_outputCSV = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/mmw_demo_output.csv";
     QString defaulthPath_inputDAT = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/AWR1843_captured.dat";
     ParsedData *parsed_data = new ParsedData();
+
+    void DatUnification_v0(ParsedData *parDat, float limitRadius);
 private:
+
+
 
 };
 

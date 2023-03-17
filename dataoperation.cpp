@@ -233,3 +233,71 @@ void DataOperation::to_CSV(ParsedData *parDat){
     }
     file.close();
 }
+
+void DataOperation::DatUnification_v0(ParsedData *parDat, float limitRadius){
+    int obj = 0;
+    for(int i=0;i<(int)parDat->frame_data.size();i++){
+        //j == frame
+        for(int j=0;j<(int)parDat->frame_data[i].size();j++){
+            if(i == (int)parDat->frame_data[i].size()-1){
+                int penultimePointX = parDat->frame_data[i][j++].posX;
+                int penultimePointY = parDat->frame_data[i][j++].posY;
+                int deltaX = abs(parDat->frame_data[i][j].posX - penultimePointX);
+                int deltaY = abs(parDat->frame_data[i][j].posY - penultimePointY);
+                if(deltaX <= limitRadius && deltaY <= limitRadius){
+                    parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
+                }
+                else{
+                    obj++;
+                    parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
+                }
+            }
+            int nextPointX = parDat->frame_data[i][j++].posX;
+            int nextPointY = parDat->frame_data[i][j++].posY;
+            int deltaX = abs(parDat->frame_data[i][j].posX - nextPointX);
+            int deltaY = abs(parDat->frame_data[i][j].posY - nextPointY);
+
+            if(deltaX <= limitRadius && deltaY <= limitRadius){
+                parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
+            }
+            else{
+                obj++;
+            }
+        }
+    }
+}
+
+void DataOperation::to_CSV_UnificatedData_v0(ParsedData* parDat){
+    QFile file("C:/Users/bob/Documents/GitHub/RadarVisualizer/tst/outFile_Unified.csv");
+    QTextStream outFile(&file);
+    file.open(QIODevice::ReadWrite |QIODevice::Append);
+    for(int frame = 0; frame<(int)parDat->unified_Points.size();frame++){
+        for(int detObj = 0;detObj<(int)parDat->unified_Points[frame].size();detObj++){
+            for(int point = 0; point<(int)parDat->unified_Points[frame][detObj].size();point++){
+
+                outFile << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].frame << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].detObj << ","
+                        << detObj << ","    //set of points
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posX << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posY << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].speed << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].snr << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].noise << ",\n";
+            }
+        }
+    }
+
+    for(int i=0;i<(int)parDat->frame_data.size();i++){
+        for(int j=0;j<(int)parDat->frame_data[i].size();j++){
+            outFile << parDat->frame_data[i][j].frame << ","
+                    << parDat->frame_data[i][j].detObj << ","
+                    << parDat->frame_data[i][j].posX << ","
+                    << parDat->frame_data[i][j].posY << ","
+                    << parDat->frame_data[i][j].speed << ","
+                    << parDat->frame_data[i][j].snr << ","
+                    << parDat->frame_data[i][j].noise << ",\n";
+        }
+    }
+    file.close();
+}
+}
