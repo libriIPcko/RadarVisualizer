@@ -97,8 +97,10 @@ void Graphics::drawPoint(float posX,float posY, int multiplier){
     rect.setX(4);
     rect.setY(4);
     QPointF pos;
-    pos.setX(posX * multiplier);
-    pos.setY(posY * multiplier);
+    float pos_X = posX*multiplier;
+    float pos_Y = posY*multiplier;
+    pos.setX(pos_X);
+    pos.setY(pos_Y);
     rect.moveTo(pos);
     ell = m_scene->addEllipse(rect,pen,brush);
     //qDebug() << ell->pos();

@@ -68,10 +68,6 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
-    void on_spinBox_valueChanged(int arg1);
-
-    void on_spinBox_textChanged(const QString &arg1);
-
     void on_spinBox_editingFinished();
 
 private:

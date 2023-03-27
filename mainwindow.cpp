@@ -169,7 +169,7 @@ void MainWindow::on_actual_frame_spinBox_valueChanged(int arg1)
 {
     ui->actual_framehorizontalSlider->setValue(arg1);
     grTest->show_frame(arg1);
-    grTest->show_Axis('a',ui->graphicsView->size(),10);
+    //grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
 
 
@@ -177,7 +177,7 @@ void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
 {
     ui->actual_frame_spinBox->setValue(position);
     grTest->show_frame(position);
-    grTest->show_Axis('a',ui->graphicsView->size(),10);
+    //grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
 
 
