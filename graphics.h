@@ -18,7 +18,8 @@ class Graphics : public QObject
 public:
     Graphics(QGraphicsScene *scene, ParsedData *parDat);
     void drawPoint();
-    void drawPoint(int posX,int posY);
+    int  point_multiplier = 1;
+    void drawPoint(float posX,float posY, int multiplier);
     void drawSomething();
     int bound_max_height = 0;
     int bound_max_width = 0;

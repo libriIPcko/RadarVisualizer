@@ -98,7 +98,7 @@ void MainWindow::on_pushButton_activity_released()
 
     //datOp->to_CSV(datOp->parsed_data);
     //grTest->show_frame(datOp->parsed_data,0);
-    grTest->show_CenterMarker();
+    //grTest->show_CenterMarker();
     grTest->showData(ui->min_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
     connect(grTest,SIGNAL(frame_sig(int)),this,SLOT(on_frame_graphic_refresh(int)));
 }
@@ -125,6 +125,10 @@ bool MainWindow::event(QEvent *event){
     }
     else if(event->type() == QEvent::MouseButtonRelease){
         qDebug() << "MB was released";
+        return true;
+    }
+    else if(event->type() == QEvent::Wheel){
+        qDebug() << "Weeeeeeeeee";
         return true;
     }
 
@@ -254,3 +258,11 @@ void MainWindow::on_checkBox_toggled(bool checked)
     }
 }
 
+/*
+void MainWindow::on_doubleSpinBox_valueChanged(double arg1)
+{
+    ui->graphicsView->scale(arg1,arg1);
+    //ui->graphicsView->shear(arg1,arg1);
+    qDebug() << arg1;
+}
+*/

@@ -28,16 +28,12 @@ public:
 
     QGraphicsScene *scene = new QGraphicsScene();
 
-
     //Graphics grTest(scene);
     DataOperation *datOp = new DataOperation();
     Graphics *grTest = new Graphics(scene,datOp->parsed_data);
 
-
     int positionX = 0;
     int positionY = 0;
-
-
 
     //Second Tab
     QListWidgetItem *item = new QListWidgetItem();
@@ -72,9 +68,12 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
+    void on_doubleSpinBox_valueChanged(double arg1);
+
 private:
     Ui::MainWindow *ui;
     int min_frame_start = 0;
     int max_frame_start = 0;
+    int wheel_counter;
 };
 #endif // MAINWINDOW_H

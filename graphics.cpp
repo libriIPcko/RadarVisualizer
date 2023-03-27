@@ -20,6 +20,10 @@ bool Graphics::event(QEvent *event){
         qDebug() << "Double-click";
         return true;
     }
+    else if(event->type() == QEvent::GraphicsSceneWheel){
+        qDebug() << "Wheeeeeee";
+        return true;
+    }
     return Graphics::event(event);
 }
 
@@ -77,7 +81,7 @@ void Graphics::drawPoint(){
     tim_move->start();
 }
 
-void Graphics::drawPoint(int posX,int posY){
+void Graphics::drawPoint(float posX,float posY, int multiplier){
     QRandomGenerator Gen_width;
     QRandomGenerator Gen_height;
     //QPainter paint;
@@ -89,8 +93,8 @@ void Graphics::drawPoint(int posX,int posY){
     rect.setX(4);
     rect.setY(4);
     QPointF pos;
-    pos.setX(posX);
-    pos.setY(posY);
+    pos.setX(posX * multiplier);
+    pos.setY(posY * multiplier);
     rect.moveTo(pos);
     ell = m_scene->addEllipse(rect,pen,brush);
     //qDebug() << ell->pos();
@@ -100,6 +104,7 @@ void Graphics::drawPoint(int posX,int posY){
     tim_move->start();
     */
 }
+
 void Graphics::show_CenterMarker(){
     QPen line_type;
     line_type.setStyle(Qt::DotLine);
@@ -174,18 +179,18 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         for(int i=0;i < (int)parDat->frame_data[frame].size();i++){
             int posX = parDat->frame_data[frame][i].posX *100;
             int posY = parDat->frame_data[frame][i].posY *100;
-            drawPoint(posX,posY);
+            drawPoint(posX,posY,point_multiplier);
         }
     //recalculate coordinations
 }
 void Graphics::show_frame(int frame){
     m_scene->clear();
     for(int i=0;i < (int)m_parDat->frame_data[frame].size();i++){
-        int posX = m_parDat->frame_data[frame][i].posX *100;
-        int posY = m_parDat->frame_data[frame][i].posY *100;
-        drawPoint(posX,posY);
+        int posX = m_parDat->frame_data[frame][i].posX;//multiplier *100;
+        int posY = m_parDat->frame_data[frame][i].posY;//multiplier *100;
+        drawPoint(posX,posY,point_multiplier);
     }
-    show_Axis('a',viewWidget,10);
+    //show_Axis('a',viewWidget,10);
     show_CenterMarker();
 }
 
@@ -219,9 +224,9 @@ void Graphics::on_showData_next(){
     //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
     m_scene->clear();
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
-        int posX = m_parDat->frame_data[actualFrame][i].posX *10;
-        int posY = m_parDat->frame_data[actualFrame][i].posY *10;
-        drawPoint(posX,posY);
+        int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
+        int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
+        drawPoint(posX,posY,point_multiplier);
     }
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
         actualFrame = 0;
@@ -230,7 +235,7 @@ void Graphics::on_showData_next(){
     else{
         actualFrame++;
     }
-    show_Axis('a',viewWidget,10);
+    //show_Axis('a',viewWidget,10);
     show_CenterMarker();
     emit frame_sig(actualFrame-1);
 
