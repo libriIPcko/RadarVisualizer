@@ -7,6 +7,7 @@
 #include <QRandomGenerator>
 #include <QTimer>
 #include <QEvent>
+#include <QGraphicsSceneEvent>
 
 #include <dataoperation.h>
 #include <parseddata.h>
@@ -49,6 +50,8 @@ private:
     float min_pos_X = 0;
     float max_pos_Y = 0;
     float max_pos_X = 0;
+
+    void mousePos(QGraphicsSceneMouseEvent* event);
 
 private slots:
     void on_move_timeout();

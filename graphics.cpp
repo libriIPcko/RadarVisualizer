@@ -3,7 +3,11 @@
 
 
 Graphics::Graphics(QGraphicsScene *scene, ParsedData *parDat) : m_scene(scene), m_parDat(parDat){
+}
 
+void Graphics::mousePos(QGraphicsSceneMouseEvent* event){
+    qDebug() << "x: " << event->scenePos().x() << "\n";
+    qDebug() << "y: " << event->scenePos().y() << "\n";
 }
 
 bool Graphics::event(QEvent *event){

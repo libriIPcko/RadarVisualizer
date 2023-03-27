@@ -132,6 +132,7 @@ bool MainWindow::event(QEvent *event){
         return true;
     }
 
+
     return QMainWindow::event(event);
 }
 
@@ -258,11 +259,9 @@ void MainWindow::on_checkBox_toggled(bool checked)
     }
 }
 
-/*
-void MainWindow::on_doubleSpinBox_valueChanged(double arg1)
+void MainWindow::on_spinBox_editingFinished()
 {
-    ui->graphicsView->scale(arg1,arg1);
-    //ui->graphicsView->shear(arg1,arg1);
-    qDebug() << arg1;
+    grTest->point_multiplier = ui->spinBox->value();
+    qDebug() << QString::number(grTest->point_multiplier);
 }
-*/
+

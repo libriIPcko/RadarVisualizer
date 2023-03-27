@@ -68,12 +68,16 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
-    void on_doubleSpinBox_valueChanged(double arg1);
+    void on_spinBox_valueChanged(int arg1);
+
+    void on_spinBox_textChanged(const QString &arg1);
+
+    void on_spinBox_editingFinished();
 
 private:
     Ui::MainWindow *ui;
     int min_frame_start = 0;
     int max_frame_start = 0;
-    int wheel_counter;
+    int spinBox_counter = 100;
 };
 #endif // MAINWINDOW_H

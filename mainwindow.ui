@@ -171,23 +171,26 @@
        <string>||</string>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBox">
+     <widget class="QSpinBox" name="spinBox">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>30</y>
-        <width>62</width>
+        <x>560</x>
+        <y>10</y>
+        <width>42</width>
         <height>25</height>
        </rect>
       </property>
-      <property name="singleStep">
-       <double>0.010000000000000</double>
+      <property name="correctionMode">
+       <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
       </property>
-      <property name="stepType">
-       <enum>QAbstractSpinBox::DefaultStepType</enum>
+      <property name="maximum">
+       <number>5000</number>
       </property>
       <property name="value">
-       <double>1.000000000000000</double>
+       <number>100</number>
+      </property>
+      <property name="displayIntegerBase">
+       <number>10</number>
       </property>
      </widget>
     </widget>
