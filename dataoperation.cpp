@@ -237,13 +237,15 @@ void DataOperation::to_CSV(ParsedData *parDat){
 void DataOperation::DatUnification_v0(ParsedData *parDat, float limitRadius){
     int obj = 0;
     for(int i=0;i<(int)parDat->frame_data.size();i++){
+        parDat->unified_Points.resize(i+1);
         //j == frame
         for(int j=0;j<(int)parDat->frame_data[i].size();j++){
+            parDat->unified_Points[i].resize(i+1);
             if(i == (int)parDat->frame_data[i].size()-1){
-                int penultimePointX = parDat->frame_data[i][j++].posX;
-                int penultimePointY = parDat->frame_data[i][j++].posY;
-                int deltaX = abs(parDat->frame_data[i][j].posX - penultimePointX);
-                int deltaY = abs(parDat->frame_data[i][j].posY - penultimePointY);
+                float penultimePointX = parDat->frame_data[i][j++].posX;
+                float penultimePointY = parDat->frame_data[i][j++].posY;
+                float deltaX = abs(parDat->frame_data[i][j].posX - penultimePointX);
+                float deltaY = abs(parDat->frame_data[i][j].posY - penultimePointY);
                 if(deltaX <= limitRadius && deltaY <= limitRadius){
                     parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
                 }
@@ -252,10 +254,10 @@ void DataOperation::DatUnification_v0(ParsedData *parDat, float limitRadius){
                     parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
                 }
             }
-            int nextPointX = parDat->frame_data[i][j++].posX;
-            int nextPointY = parDat->frame_data[i][j++].posY;
-            int deltaX = abs(parDat->frame_data[i][j].posX - nextPointX);
-            int deltaY = abs(parDat->frame_data[i][j].posY - nextPointY);
+            float nextPointX = parDat->frame_data[i][j++].posX;
+            float nextPointY = parDat->frame_data[i][j++].posY;
+            float deltaX = abs(parDat->frame_data[i][j].posX - nextPointX);
+            float deltaY = abs(parDat->frame_data[i][j].posY - nextPointY);
 
             if(deltaX <= limitRadius && deltaY <= limitRadius){
                 parDat->unified_Points[j][obj].push_back(parDat->frame_data[i][j].detObj);
@@ -286,18 +288,6 @@ void DataOperation::to_CSV_UnificatedData_v0(ParsedData* parDat){
             }
         }
     }
-
-    for(int i=0;i<(int)parDat->frame_data.size();i++){
-        for(int j=0;j<(int)parDat->frame_data[i].size();j++){
-            outFile << parDat->frame_data[i][j].frame << ","
-                    << parDat->frame_data[i][j].detObj << ","
-                    << parDat->frame_data[i][j].posX << ","
-                    << parDat->frame_data[i][j].posY << ","
-                    << parDat->frame_data[i][j].speed << ","
-                    << parDat->frame_data[i][j].snr << ","
-                    << parDat->frame_data[i][j].noise << ",\n";
-        }
-    }
     file.close();
 }
-}
+

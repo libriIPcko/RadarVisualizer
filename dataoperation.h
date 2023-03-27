@@ -28,6 +28,7 @@ public:
     ParsedData *parsed_data = new ParsedData();
 
     void DatUnification_v0(ParsedData *parDat, float limitRadius);
+    void to_CSV_UnificatedData_v0(ParsedData* parDat);
 private:
 
 
