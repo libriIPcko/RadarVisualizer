@@ -85,6 +85,36 @@ void Graphics::drawPoint(){
     tim_move->start();
 }
 
+void Graphics::loadPoint(float posX,float posY){
+    //QGraphicsEllipseItem *ellItem = new QGraphicsEllipseItem ();
+    QGraphicsEllipseItem ellItem;
+   QPen pen;
+   pen.setColor(Qt::red);
+   QBrush brush;
+   brush.setColor(Qt::red);
+   QRectF rect;
+   rect.setX(4);
+   rect.setY(4);
+   QPointF pos;
+   pos.setX(posX);
+   pos.setY(posY);
+    //ellItem.setRect(rect);
+    //ellItem.setPos(posX,posY);
+
+    items_list.append(new QGraphicsEllipseItem(posX,posY,2,2));
+}
+void Graphics::renderPoints(){
+    //group = m_scene->createItemGroup(items_list);
+    m_scene->createItemGroup(items_list);
+}
+
+void Graphics::removeItem(){
+    for(int n=0;n<=items_list.size()-1;n++){
+        m_scene->removeItem(items_list.at(n));
+    }
+    items_list.clear();
+}
+
 void Graphics::drawPoint(float posX,float posY, int multiplier){
     QRandomGenerator Gen_width;
     QRandomGenerator Gen_height;

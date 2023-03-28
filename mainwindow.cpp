@@ -123,8 +123,21 @@ bool MainWindow::event(QEvent *event){
 
         return true;
     }
-    else if(event->type() == QEvent::MouseButtonRelease){
-        qDebug() << "MB was released";
+    else if(event->type() == QEvent::MouseButtonRelease){        
+        grTest->removeItem();
+        qDebug() << "MB was released" << counter_MBR++;// << "/" <<seedFTime;
+        for(int i = 0;i<6;i++){
+            QDateTime currTime = QDateTime::currentDateTime();
+            int seedFTime = currTime.time().second()+currTime.time().minute();
+            QRandomGenerator randX;
+            randX.seed(seedFTime+i);
+            float posX = randX.generateDouble() * 100;
+            randX.seed(posX+i);
+            float posY = randX.generateDouble() * 100;
+            grTest->loadPoint(posX,posY);
+            qDebug() << i << " : " << "x: " << posX << " y:" << posY;
+        }
+        grTest->renderPoints();
         return true;
     }
     else if(event->type() == QEvent::Wheel){

@@ -75,5 +75,6 @@ private:
     int min_frame_start = 0;
     int max_frame_start = 0;
     int spinBox_counter = 100;
+    int counter_MBR = 0;
 };
 #endif // MAINWINDOW_H
