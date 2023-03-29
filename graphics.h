@@ -19,21 +19,21 @@ class Graphics : public QObject
 public:
     Graphics(QGraphicsScene *scene, ParsedData *parDat);
     void drawPoint();
-    void loadPoint(float posX,float posY);
+    void loadPoint(float posX,float posY,float multiplier);
     void renderPoints();
     void removeItem();
 
-    int  point_multiplier = 100;
+
     void drawPoint(float posX,float posY, int multiplier);
     void drawSomething();
     int bound_max_height = 0;
     int bound_max_width = 0;
+
+    int  point_multiplier = 100;
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem(); //global variable for drawPoint(), it is recommended for without layer approachb
-
     QList<QGraphicsItem*> items_list;
-    //QGraphicsItemGroup *group = new QGraphicsItemGroup();
-
+    QGraphicsItemGroup *group = new QGraphicsItemGroup();
 
 
     QTimer *tim_showData;
@@ -43,6 +43,7 @@ public:
     void show_frame(int frame);
     void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
+
     void show_Axis(char direction,QSize size, int step);
     void find_MinMax_pos();
 

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     grTest->bound_max_height = ui->centralwidget->size().height();
     grTest->bound_max_width = ui->centralwidget->size().width();
 
+    grTest->point_multiplier = ui->spinBox->value();
 
     ui->csvFiles_listWidget->setVisible(false);
     ui->datFiles_listWidget->setVisible(false);
@@ -86,20 +87,12 @@ void MainWindow::update_csvFiles_listWidget(){
     }
 }
 
-void MainWindow::on_pushButton_activity_released()
-{
-    //grTest->drawPoint();
-    /*
-    grTest->drawPoint(positionX,positionY);
-    positionX = positionX + 10;
-    positionY = positionY + 10;
-    qDebug() << "Test";
-    */
-
-    //datOp->to_CSV(datOp->parsed_data);
+void MainWindow::on_pushButton_activity_released(){
     //grTest->show_frame(datOp->parsed_data,0);
     //grTest->show_CenterMarker();
-    grTest->showData(ui->min_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
+
+    //grTest->showData(ui->min_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
+    grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
     connect(grTest,SIGNAL(frame_sig(int)),this,SLOT(on_frame_graphic_refresh(int)));
 }
 
@@ -134,7 +127,7 @@ bool MainWindow::event(QEvent *event){
             float posX = randX.generateDouble() * 100;
             randX.seed(posX+i);
             float posY = randX.generateDouble() * 100;
-            grTest->loadPoint(posX,posY);
+            grTest->loadPoint(posX,posY,grTest->point_multiplier);
             qDebug() << i << " : " << "x: " << posX << " y:" << posY;
         }
         grTest->renderPoints();
@@ -227,8 +220,7 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
 }
 
 
-void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFile)
-{
+void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFile){
     auto path = item_csvFile->data(Qt::UserRole).toString();
     auto fileName = ui->csvFiles_listWidget->currentItem()->text();
     QString absolutePath = path+"/"+fileName;
@@ -250,7 +242,6 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
 
         //datOp->DatUnification_v0(datOp->parsed_data,1);
         //datOp->to_CSV_UnificatedData_v0(datOp->parsed_data);
-
     }
 }
 

@@ -85,34 +85,27 @@ void Graphics::drawPoint(){
     tim_move->start();
 }
 
-void Graphics::loadPoint(float posX,float posY){
-    //QGraphicsEllipseItem *ellItem = new QGraphicsEllipseItem ();
-    QGraphicsEllipseItem ellItem;
-   QPen pen;
-   pen.setColor(Qt::red);
-   QBrush brush;
-   brush.setColor(Qt::red);
-   QRectF rect;
-   rect.setX(4);
-   rect.setY(4);
-   QPointF pos;
-   pos.setX(posX);
-   pos.setY(posY);
-    //ellItem.setRect(rect);
-    //ellItem.setPos(posX,posY);
-
-    items_list.append(new QGraphicsEllipseItem(posX,posY,2,2));
+void Graphics::loadPoint(float posX,float posY,float multiplier){
+   float pos_X = posX * multiplier;
+   float pos_Y = posY * multiplier;
+   items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,2,2));
 }
+
 void Graphics::renderPoints(){
     //group = m_scene->createItemGroup(items_list);
-    m_scene->createItemGroup(items_list);
+    group = m_scene->createItemGroup(items_list);
+
 }
 
 void Graphics::removeItem(){
-    for(int n=0;n<=items_list.size()-1;n++){
-        m_scene->removeItem(items_list.at(n));
+    if(m_scene->children().size() > 0){
+        //m_scene->destroyItemGroup(group);
+        for(int n=0;n<=items_list.size()-1;n++){
+            m_scene->removeItem(items_list.at(n));
+            //group->removeFromGroup(items_list.at(n));
+        }
+        items_list.clear();
     }
-    items_list.clear();
 }
 
 void Graphics::drawPoint(float posX,float posY, int multiplier){
@@ -212,20 +205,26 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         //*100 for test
     //take coordinations from parDat for chosen frame
         //parDat.frame_data
+        removeItem();
         for(int i=0;i < (int)parDat->frame_data[frame].size();i++){
             int posX = parDat->frame_data[frame][i].posX *100;
             int posY = parDat->frame_data[frame][i].posY *100;
-            drawPoint(posX,posY,point_multiplier);
+            //drawPoint(posX,posY,point_multiplier);
+            loadPoint(posX,posY,point_multiplier);
         }
+        renderPoints();
     //recalculate coordinations
 }
 void Graphics::show_frame(int frame){
-    m_scene->clear();
+    //m_scene->clear();
+    removeItem();
     for(int i=0;i < (int)m_parDat->frame_data[frame].size();i++){
         int posX = m_parDat->frame_data[frame][i].posX;//multiplier *100;
         int posY = m_parDat->frame_data[frame][i].posY;//multiplier *100;
-        drawPoint(posX,posY,point_multiplier);
+        //drawPoint(posX,posY,point_multiplier);
+        loadPoint(posX,posY,point_multiplier);
     }
+    renderPoints();
     //show_Axis('a',viewWidget,10);
     show_CenterMarker();
 }
@@ -247,10 +246,11 @@ void Graphics::pause(){
 }
 
 void Graphics::play(){
+    /*
     tim_move->setInterval(500);
     qDebug() << "In progress the FPS value is not shared with this method";
     tim_move->start();
-
+    */
 }
 
 void Graphics::on_move_timeout(){
@@ -258,12 +258,17 @@ void Graphics::on_move_timeout(){
 }
 void Graphics::on_showData_next(){
     //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
-    m_scene->clear();
+    //m_scene->clear();
+
+    //removeItem();
+
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
         int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
         int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
-        drawPoint(posX,posY,point_multiplier);
+        //drawPoint(posX,posY,point_multiplier);
+        loadPoint(posX,posY,point_multiplier);
     }
+    renderPoints();
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
         actualFrame = 0;
         tim_showData->stop();
@@ -274,6 +279,4 @@ void Graphics::on_showData_next(){
     //show_Axis('a',viewWidget,10);
     show_CenterMarker();
     emit frame_sig(actualFrame-1);
-
-
 }
