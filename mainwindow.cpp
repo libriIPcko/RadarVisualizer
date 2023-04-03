@@ -56,10 +56,10 @@ void MainWindow::update_datFiles_listWidget(){
         item_datFile->listWidget()->clear();
     }
     //for Debug version
-        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
 
     //for release version
-    QDir dir = datOp->relativePath_DATFiles;
+        //QDir dir = datOp->relativePath_DATFiles;
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
@@ -79,10 +79,10 @@ void MainWindow::update_csvFiles_listWidget(){
         item_csvFile->listWidget()->clear();
     }
     //for Debug Version
-        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
 
     //for release version
-        QDir dir = datOp->relativePath_CSVFiles;
+        //QDir dir = datOp->relativePath_CSVFiles;
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
