@@ -55,7 +55,12 @@ void MainWindow::update_datFiles_listWidget(){
     if(item_datFile->listWidget()->size().isEmpty() == false){
         item_datFile->listWidget()->clear();
     }
-    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    //for Debug version
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+
+    //for release version
+    QDir dir = datOp->relativePath_DATFiles;
+
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -73,8 +78,12 @@ void MainWindow::update_csvFiles_listWidget(){
     if(item_csvFile->listWidget()->size().isEmpty() == false){
         item_csvFile->listWidget()->clear();
     }
+    //for Debug Version
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
 
-    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    //for release version
+        QDir dir = datOp->relativePath_CSVFiles;
+
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -199,9 +208,11 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
 
         //setup maximal dimension of view
         grTest->find_MinMax_pos();
-
-        //datOp->DatUnification_v0(datOp->parsed_data,1);
-        //datOp->to_CSV_UnificatedData_v0(datOp->parsed_data);
+        /*
+        datOp->DatUnification_v0(datOp->parsed_data,1);
+        datOp->to_CSV_UnificatedData_v0(datOp->parsed_data);
+        */
+        //grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),10);
     }
 }
 
