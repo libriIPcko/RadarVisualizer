@@ -87,9 +87,9 @@ void DataOperation::read_from_parsed_file(QString path){
     }
     else{
         //line
-        //QFile output("file:///C:/Users/bob/Documents/build-RadarVisualizer-Desktop_Qt_6_4_2_MinGW_64_bit-Release/release");
-        //QTextStream outStream(&output);
-        //output.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        QFile output("C:/Users/bob/Documents/GitHub/RadarVisualizer/tst/outTxt.txt");
+        QTextStream outStream(&output);
+        output.open(QIODevice::ReadWrite | QIODevice::Truncate);
         QString line;
         bool  headerRemove = true;
         while(data.readLineInto(&line)){
@@ -99,7 +99,7 @@ void DataOperation::read_from_parsed_file(QString path){
            else{
                int comma = 0;
                int next_comma = 0;
-               //outStream << "\n";
+               outStream << "\n";
                int column_pos = 0;
                while(comma < line.length()){
                    QString column;

@@ -23,17 +23,8 @@ public:
     void load_toParsedData_dependentOnFrame(QString data, int column_pos);
     void to_CSV(ParsedData* parDat);
     int load_toParsedData_dependentOnFrame_COUNTER = 0;
-
-    QString relativePath_DATFiles = "parse_script/CapturedData/";
-    QString relativePath_CSVFiles = "parse_script/ParsedData/";
-    //Path for debug verision:
-    //QString defaulthPath_outputCSV = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/mmw_demo_output.csv";
-    //QString defaulthPath_inputDAT = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/AWR1843_captured.dat";
-
-    //Path for realease version:
-    QString defaulthPath_outputCSV = "release/parse_script/mmw_demo_output.csv";
-    QString defaulthPath_inputDAT = "release/parse_script/CapturedData/AWR1843_captured.dat";
-
+    QString defaulthPath_outputCSV = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/mmw_demo_output.csv";
+    QString defaulthPath_inputDAT = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/AWR1843_captured.dat";
     ParsedData *parsed_data = new ParsedData();
 
     void DatUnification_v0(ParsedData *parDat, float limitRadius);
