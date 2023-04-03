@@ -10,6 +10,14 @@ void Graphics::mousePos(QGraphicsSceneMouseEvent* event){
     qDebug() << "y: " << event->scenePos().y() << "\n";
 }
 
+void Graphics::mousePressEvent(QGraphicsSceneMouseEvent* event){
+    if (event->button() == Qt::LeftButton) {
+        qDebug() << "Do something when the left mouse button is clicked on this item";
+    } else if (event->button() == Qt::RightButton) {
+        qDebug() << "// Do something when the right mouse button is clicked on this item";
+    }
+}
+
 bool Graphics::event(QEvent *event){
     qDebug() << event->type();
     if(event->type() == QEvent::Resize){
@@ -93,7 +101,7 @@ void Graphics::loadPoint(float posX,float posY,float multiplier){
 
 void Graphics::renderPoints(){
     //group = m_scene->createItemGroup(items_list);
-    group = m_scene->createItemGroup(items_list);
+    m_scene->createItemGroup(items_list);
 }
 
 void Graphics::removeItem(){

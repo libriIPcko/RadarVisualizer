@@ -102,46 +102,6 @@ void MainWindow::on_frame_graphic_refresh(int actualFrame){
     ui->actual_framehorizontalSlider->setValue(actualFrame);
 }
 
-bool MainWindow::event(QEvent *event){
-    if(event->type() == QEvent::Resize){
-        ui->tabWidget->resize(ui->centralwidget->size());
-        //ui->graphicsView->resize(ui->centralwidget->size());
-        int ax = ui->centralwidget->size().width();
-        int ay = ui->centralwidget->size().height();
-        grTest->viewWidget = ui->centralwidget->size();
-        ui->graphicsView->resize(ax-80,ay-80);
-        ui->graphicsView->move(30,40);
-
-        //qDebug() << "GraphicsView was resized" << ui->graphicsView->size();
-
-        return true;
-    }
-    else if(event->type() == QEvent::MouseButtonRelease){        
-        grTest->removeItem();
-        qDebug() << "MB was released" << counter_MBR++;// << "/" <<seedFTime;
-        for(int i = 0;i<6;i++){
-            QDateTime currTime = QDateTime::currentDateTime();
-            int seedFTime = currTime.time().second()+currTime.time().minute();
-            QRandomGenerator randX;
-            randX.seed(seedFTime+i);
-            float posX = randX.generateDouble() * 100;
-            randX.seed(posX+i);
-            float posY = randX.generateDouble() * 100;
-            grTest->loadPoint(posX,posY,grTest->point_multiplier);
-            qDebug() << i << " : " << "x: " << posX << " y:" << posY;
-        }
-        grTest->renderPoints();
-        return true;
-    }
-    else if(event->type() == QEvent::Wheel){
-        qDebug() << "Weeeeeeeeee";
-        return true;
-    }
-
-
-    return QMainWindow::event(event);
-}
-
 void MainWindow::on_pushButton_released()
 {
     MainWindow::scene->clear();
@@ -269,3 +229,50 @@ void MainWindow::on_spinBox_editingFinished()
     qDebug() << QString::number(grTest->point_multiplier);
 }
 
+void MainWindow::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    if (event->button() == Qt::LeftButton) {
+        qDebug() << "Do something when the left mouse button is clicked on this item";
+    } else if (event->button() == Qt::RightButton) {
+        qDebug() << "// Do something when the right mouse button is clicked on this item";
+    }
+}
+
+bool MainWindow::event(QEvent *event){
+    if(event->type() == QEvent::Resize){
+        ui->tabWidget->resize(ui->centralwidget->size());
+        //ui->graphicsView->resize(ui->centralwidget->size());
+        int ax = ui->centralwidget->size().width();
+        int ay = ui->centralwidget->size().height();
+        grTest->viewWidget = ui->centralwidget->size();
+        ui->graphicsView->resize(ax-80,ay-80);
+        ui->graphicsView->move(30,40);
+
+        //qDebug() << "GraphicsView was resized" << ui->graphicsView->size();
+
+        return true;
+    }
+    else if(event->type() == QEvent::MouseButtonRelease){
+        grTest->removeItem();
+        qDebug() << "MB was released" << counter_MBR++;// << "/" <<seedFTime;
+        for(int i = 0;i<6;i++){
+            QDateTime currTime = QDateTime::currentDateTime();
+            int seedFTime = currTime.time().second()+currTime.time().minute();
+            QRandomGenerator randX;
+            randX.seed(seedFTime+i);
+            float posX = randX.generateDouble() * 100;
+            randX.seed(posX+i);
+            float posY = randX.generateDouble() * 100;
+            grTest->loadPoint(posX,posY,grTest->point_multiplier);
+            qDebug() << i << " : " << "x: " << posX << " y:" << posY;
+        }
+        grTest->renderPoints();
+        return true;
+    }
+    else if(event->type() == QEvent::Wheel){
+        qDebug() << "Weeeeeeeeee";
+        return true;
+    }
+
+
+    return QMainWindow::event(event);
+}

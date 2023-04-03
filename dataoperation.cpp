@@ -234,6 +234,30 @@ void DataOperation::to_CSV(ParsedData *parDat){
     file.close();
 }
 
+
+
+void DataOperation::to_CSV_UnificatedData_v0(ParsedData* parDat){
+    QFile file("C:/Users/bob/Documents/GitHub/RadarVisualizer/tst/outFile_Unified.csv");
+    QTextStream outFile(&file);
+    file.open(QIODevice::ReadWrite |QIODevice::Append);
+    for(int frame = 0; frame<(int)parDat->unified_Points.size();frame++){
+        for(int detObj = 0;detObj<(int)parDat->unified_Points[frame].size();detObj++){
+            for(int point = 0; point<(int)parDat->unified_Points[frame][detObj].size();point++){
+
+                outFile << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].frame << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].detObj << ","
+                        << detObj << ","    //set of points
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posX << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posY << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].speed << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].snr << ","
+                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].noise << ",\n";
+            }
+        }
+    }
+    file.close();
+}
+
 void DataOperation::DatUnification_v0(ParsedData *parDat, float limitRadius){
     int obj = 0;
     for(int i=0;i<(int)parDat->frame_data.size();i++){
@@ -269,25 +293,46 @@ void DataOperation::DatUnification_v0(ParsedData *parDat, float limitRadius){
     }
 }
 
-void DataOperation::to_CSV_UnificatedData_v0(ParsedData* parDat){
-    QFile file("C:/Users/bob/Documents/GitHub/RadarVisualizer/tst/outFile_Unified.csv");
-    QTextStream outFile(&file);
-    file.open(QIODevice::ReadWrite |QIODevice::Append);
-    for(int frame = 0; frame<(int)parDat->unified_Points.size();frame++){
-        for(int detObj = 0;detObj<(int)parDat->unified_Points[frame].size();detObj++){
-            for(int point = 0; point<(int)parDat->unified_Points[frame][detObj].size();point++){
+void DataOperation::DatUnification_v1(ParsedData *parDat,int frame, float limitRadius){
+    /*
+    for(int detObj=0;detObj<=parDat->frame_data[frame].size()-1;detObj++){
+        if(detObj>=parDat->frame_data[frame].size()-1){
+            //OVERLOAD !!!
+            break;
+        }
+        else{
+            float deltaX  = parDat->frame_data[frame][detObj].posX - parDat->frame_data[frame][detObj++].posX;
+            float deltaY = parDat->frame_data[frame][detObj].posY - parDat->frame_data[frame][detObj++].posX;
+        }
+    }
+    */
+    int ref_DetObj = 0;
+    //int group[parDat->frame_data[frame].size()];
+    QList<int> group;
+    //int group_out[parDat->frame_data[frame].size()];
+    QList<int> group_out;
 
-                outFile << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].frame << ","
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].detObj << ","
-                        << detObj << ","    //set of points
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posX << ","
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].posY << ","
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].speed << ","
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].snr << ","
-                        << parDat->frame_data[frame][parDat->unified_Points[frame][detObj][point]].noise << ",\n";
+    for(int detObj=0;detObj<=parDat->frame_data[frame].size()-1;detObj++){
+        if(detObj>=parDat->frame_data[frame].size()-1){
+            //OVERLOAD !!!
+            break;
+        }
+        else{
+            float deltaX  = parDat->frame_data[frame][ref_DetObj].posX - parDat->frame_data[frame][detObj].posX;
+            float deltaY = parDat->frame_data[frame][ref_DetObj].posY - parDat->frame_data[frame][detObj].posY;
+            if(deltaX <= limitRadius && deltaY <= limitRadius){
+                //add to group
+                parDat->frame_data[frame][detObj].group = 1; // GroupCounter
+                group.append(detObj);
+                    //every time, when is changed referene you have to increment GROUP COUNTER
+            }
+            else{
+                group_out.append(detObj);
+                //add to group_out
+                if(detObj >= parDat->frame_data[frame].size()-1){
+                    ref_DetObj++;
+                }
             }
         }
     }
-    file.close();
 }
-

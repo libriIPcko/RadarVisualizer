@@ -25,6 +25,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     bool event(QEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
     QGraphicsScene *scene = new QGraphicsScene();
 

@@ -20,6 +20,7 @@ public:
         float speed;
         int snr;
         int noise;
+
     }temporary;
 
     struct detObj{
@@ -31,6 +32,7 @@ public:
         float speed;
         int snr;
         int noise;
+        int group;
     }temp_detObj;
 
     //std::deque<parsed_data_struct> frame_data;
@@ -39,6 +41,8 @@ public:
 
     //For Data Unification
     std::vector<std::vector<std::vector<int>>> unified_Points;
+    //std::vector<std::vector<parsed_data_struct>> group;
+    //std::vector<std::vector<parsed_data_struct>> outside_group;
 };
 
 #endif // PARSEDDATA_H
