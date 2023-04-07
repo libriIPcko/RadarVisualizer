@@ -31,6 +31,14 @@ public:
     QString relativePath_DATFiles = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/";
     QString relativePath_CSVFiles = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/";
 
+    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+    QString path_ParsedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/";
+    QString path_CapturedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/";
+
+    //QString path_ParsedData =   "/parse_script/ParsedData/";
+    //QString path_CapturedData = "/parse_script/CapturedData/";
+    //QString path_ParseScript =  "/parse_script/";
+
     //Path for realease version:
     //QString relativePath_DATFiles = "parse_script/CapturedData/";
     //QString relativePath_CSVFiles = "parse_script/ParsedData/";

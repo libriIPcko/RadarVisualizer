@@ -8,7 +8,7 @@ DataOperation::DataOperation()
 }
 void DataOperation::call_py(){
 
-    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+    //QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
     QString  command("python");
     QStringList params = QStringList() << "mmw_demo_example_script.py";
     QProcess *process = new QProcess();
@@ -19,7 +19,7 @@ void DataOperation::call_py(){
 
 void DataOperation::call_py_parse(QString path){
     qDebug() << path;
-    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+
     QString  command("python");
     /*
     QDate actualDate;
@@ -37,7 +37,7 @@ void DataOperation::call_py_parse(QString path){
             + QString::number(currentDateTime.time().hour()) +"_"
             + QString::number(currentDateTime.time().minute()) +"_"
             + QString::number(currentDateTime.time().second()) +".csv";
-    QString absoluteParsedPath = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/" + formatedSuffixPath;
+    QString absoluteParsedPath = path_ParsedData + formatedSuffixPath;
     qDebug() << "absoluteParsedPath: " << absoluteParsedPath;
     QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
     QProcess *process = new QProcess();
@@ -48,7 +48,7 @@ void DataOperation::call_py_parse(QString path){
 
 QString DataOperation::call_py_parse_outFile(QString path){
     qDebug() << path;
-    QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+    //QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
     QString  command("python");
     /*
     QDate actualDate;
@@ -66,7 +66,7 @@ QString DataOperation::call_py_parse_outFile(QString path){
             + QString::number(currentDateTime.time().hour()) +"_"
             + QString::number(currentDateTime.time().minute()) +"_"
             + QString::number(currentDateTime.time().second()) +".csv";
-    QString absoluteParsedPath = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/" + formatedSuffixPath;
+    QString absoluteParsedPath = path_ParsedData + formatedSuffixPath;
     qDebug() << "absoluteParsedPath: " << absoluteParsedPath;
     QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
     QProcess *process = new QProcess();

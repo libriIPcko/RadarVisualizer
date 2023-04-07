@@ -71,6 +71,8 @@ private slots:
 
     void on_spinBox_editingFinished();
 
+    void on_lineEdit_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     int min_frame_start = 0;

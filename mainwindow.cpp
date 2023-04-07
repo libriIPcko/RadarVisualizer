@@ -16,9 +16,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->csvFiles_listWidget->setVisible(false);
     ui->datFiles_listWidget->setVisible(false);
     ui->typeofLW_Label->setVisible(false);
-
+    ui->notification->setVisible(false);
     //update_csvFiles_listWidget();
-    QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    //for debug version
+        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    //for release version
+
+        //QDir dir("../RadarVisualizer/");
+        //QString relPath_ParsedData = "parse_script/ParsedData/";
+        //QString relPath_CapturedData = "parse_script/CapturedData";
+        //dir.setPath(relPath_ParsedData);
+
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -30,7 +38,11 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
     //update_datFiles_listWidget();
-     dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    //for debug version
+        dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    //for release version
+        //dir.setPath(relPath_CapturedData);
+
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -41,8 +53,6 @@ MainWindow::MainWindow(QWidget *parent)
             item_datFile = item_temp;
         }
     }
-
-
 }
 
 MainWindow::~MainWindow()
@@ -56,10 +66,12 @@ void MainWindow::update_datFiles_listWidget(){
         item_datFile->listWidget()->clear();
     }
     //for Debug version
-        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
 
     //for release version
         //QDir dir = datOp->relativePath_DATFiles;
+        QDir dir;
+        dir.setPath(datOp->path_CapturedData);
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
@@ -79,10 +91,12 @@ void MainWindow::update_csvFiles_listWidget(){
         item_csvFile->listWidget()->clear();
     }
     //for Debug Version
-        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
 
     //for release version
         //QDir dir = datOp->relativePath_CSVFiles;
+        QDir dir;
+        dir.setPath(datOp->path_ParsedData);
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
@@ -158,9 +172,12 @@ void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
 
 void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFile)
 {
+    ui->notification->setText("Parsing in progres...");
+    ui->notification->setVisible(true);
     auto path = item_datFile->data(Qt::UserRole).toString();
     auto fileName = ui->datFiles_listWidget->currentItem()->text();
     QString absolutePath = path+"/"+fileName;
+    QString finalPath;
     if(absolutePath.contains(".cfg") == true  || absolutePath.contains(".csv") == true){
         qDebug() << "It was chosen configuration file";
     }
@@ -171,7 +188,7 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
         datOp->parsed_data->frame_data.clear();
             //Algorithm: parse, loadFromParseToTLVtempDat
         //datOp->call_py_parse(datOp->defaulthPath_inputDAT); //Here have to be modification to seeking actual file
-        QString finalPath = datOp->call_py_parse_outFile(absolutePath);
+        finalPath = datOp->call_py_parse_outFile(absolutePath);
         QFile csvFile(finalPath);
         while(csvFile.exists() == false){
 
@@ -185,7 +202,9 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
         ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
         */
     }
-
+    QString temp = "Data was parsed as: " + finalPath;
+    //temp.append(finalPath);
+    ui->notification->setText("Data was parsed as" + finalPath);
 }
 
 
@@ -214,6 +233,7 @@ void MainWindow::on_csvFiles_listWidget_itemClicked(QListWidgetItem *item_csvFil
         */
         //grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),10);
     }
+    ui->notification->setText("Data are visualized ... do not trust me");
 }
 
 
@@ -277,6 +297,9 @@ bool MainWindow::event(QEvent *event){
             qDebug() << i << " : " << "x: " << posX << " y:" << posY;
         }
         grTest->renderPoints();
+
+        QDir directory;
+        qDebug() << directory.root();
         return true;
     }
     else if(event->type() == QEvent::Wheel){
@@ -287,3 +310,72 @@ bool MainWindow::event(QEvent *event){
 
     return QMainWindow::event(event);
 }
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    QString path = ui->lineEdit->text();
+    std::replace(path.begin(),path.end(),'\\','/');
+    qDebug() << "path: " << path;
+
+    //update_csvFiles_listWidget();
+    //for debug version
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+    //for release version
+        //QDir dir("../RadarVisualizer/");
+        //QString relPath_ParsedData = "parse_script/ParsedData/";
+        //QString relPath_CapturedData = "parse_script/CapturedData";
+        //dir.setPath(relPath_ParsedData);
+
+    //third-case
+
+        QString path_ParsedData =   "/parse_script/ParsedData/";
+        QString path_CapturedData = "/parse_script/CapturedData/";
+        QString path_ParseScript =  "/parse_script/";
+
+        datOp->path_py = path + path_ParseScript;
+        datOp->path_ParsedData = path + path_ParsedData;
+        datOp->path_CapturedData = path + path_CapturedData;
+
+    //
+        QString relPath_ParsedData = "/parse_script/ParsedData/";
+        QString relPath_CapturedData = "/parse_script/CapturedData/";
+        QDir dir_parsedData = path + relPath_ParsedData;
+        QDir dir_CapturedData = path + relPath_CapturedData;
+        qDebug() << "dirParsedData" << dir_parsedData;
+        qDebug() << "dirCapturedData" << dir_CapturedData;
+        datOp->defaulthPath_inputDAT = path + "/parse_script/CapturedData/AWR1843_captured.dat";
+        datOp->defaulthPath_outputCSV = path + "/parse_script/mmw_demo_output.csv";
+        datOp->relativePath_CSVFiles = path + relPath_ParsedData;
+        datOp->relativePath_DATFiles = path + relPath_CapturedData;
+    //
+
+        QDir dir(path+path_ParsedData);
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->csvFiles_listWidget->addItem(item_temp);
+            item_csvFile = item_temp;
+        }
+    }
+    //update_datFiles_listWidget();
+    //for debug version
+        //dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+    //for release version
+        //dir.setPath(relPath_CapturedData);
+        dir.setPath(path+path_CapturedData);
+
+    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
+    {
+        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
+        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
+        //listWidget->addItem(item);
+        if(item_temp->text().contains(".cfg") == false){
+            ui->datFiles_listWidget->addItem(item_temp);
+            item_datFile = item_temp;
+        }
+    }
+}
+
