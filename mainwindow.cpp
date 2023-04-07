@@ -121,6 +121,9 @@ void MainWindow::on_pushButton_activity_released(){
 
 void MainWindow::on_frame_graphic_refresh(int actualFrame){
     qDebug() << actualFrame;
+    //ui->lcd_PointNum->intValue(m_parDat->frame_data[actualFrame].size());
+    int value = datOp->parsed_data->frame_data[actualFrame].size();
+    ui->lcd_PointNum->display(QString::number(value));
     ui->actual_frame_spinBox->setValue(actualFrame);
     ui->actual_framehorizontalSlider->setValue(actualFrame);
 }
@@ -157,6 +160,7 @@ void MainWindow::on_play_pushButton_2_released()
 void MainWindow::on_actual_frame_spinBox_valueChanged(int arg1)
 {
     ui->actual_framehorizontalSlider->setValue(arg1);
+    ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[ui->actual_framehorizontalSlider->value()].size()));
     grTest->show_frame(arg1);
     //grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
@@ -274,9 +278,14 @@ bool MainWindow::event(QEvent *event){
         //ui->graphicsView->resize(ui->centralwidget->size());
         int ax = ui->centralwidget->size().width();
         int ay = ui->centralwidget->size().height();
-        grTest->viewWidget = ui->centralwidget->size();
-        ui->graphicsView->resize(ax-80,ay-80);
-        ui->graphicsView->move(30,40);
+        QSize viewSiz;
+        viewSiz.setWidth(ax-50);
+        viewSiz.setHeight(ay-100);
+        grTest->viewWidget = viewSiz;
+        //grTest->viewWidget = ui->centralwidget->size();
+        ui->graphicsView->resize(ax-50,ay-100);
+            //ui->graphicsView->move(30,40);
+        ui->graphicsView->move(10,70);
 
         //qDebug() << "GraphicsView was resized" << ui->graphicsView->size();
 
