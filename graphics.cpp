@@ -102,6 +102,8 @@ void Graphics::loadPoint(float posX,float posY,float multiplier){
    //items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,2,2));
    //change size
    items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,0.1,0.1));
+
+
 }
 
 void Graphics::renderPoints(){

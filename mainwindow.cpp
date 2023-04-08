@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
     QTransform trnsf;
     trnsf.rotate(180);
-    trnsf.scale(10,10);
+    trnsf.scale(20,20);
+    trnsf.translate(-20,0);
     ui->graphicsView->setTransform(trnsf);
 
 
