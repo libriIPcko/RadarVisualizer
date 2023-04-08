@@ -244,6 +244,9 @@
              <height>20</height>
             </size>
            </property>
+           <property name="segmentStyle">
+            <enum>QLCDNumber::Flat</enum>
+           </property>
           </widget>
          </item>
          <item>

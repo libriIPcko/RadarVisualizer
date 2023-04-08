@@ -3,6 +3,7 @@
 
 
 Graphics::Graphics(QGraphicsScene *scene, ParsedData *parDat) : m_scene(scene), m_parDat(parDat){
+
 }
 
 void Graphics::mousePos(QGraphicsSceneMouseEvent* event){
@@ -103,8 +104,22 @@ void Graphics::loadPoint(float posX,float posY,float multiplier){
 }
 
 void Graphics::renderPoints(){
-    //group = m_scene->createItemGroup(items_list);
-    m_scene->createItemGroup(items_list);
+    // Loop through the items_list and add each ellipse to the scene
+    for (int i = 0; i < items_list.size(); i++) {
+        // Get the ellipse item from the list
+        QGraphicsEllipseItem* ellipse = dynamic_cast<QGraphicsEllipseItem*>(items_list.at(i));
+
+        // Add the ellipse item to the scene
+        m_scene->addItem(ellipse);
+        m_scene->items().at(i)->setOpacity(1);
+//        m_scene->update();
+
+        if(ellipse->scene() == nullptr){
+            qDebug() << "The item num:" << i << "was not added";
+        }
+        //delete ellipse;
+    }
+
 }
 
 void Graphics::removeItem(){
@@ -149,9 +164,11 @@ void Graphics::show_CenterMarker(){
     line_type.setStyle(Qt::DotLine);
     line_type.setBrush(Qt::red);
     QLine vert;
-    vert.setLine(viewWidget.width()*-1,0,viewWidget.width(),0);
+    vert.setLine(0,-20,0,viewWidget.height());
+
     QLine hori;
-    hori.setLine(0,0,0,viewWidget.height());
+    hori.setLine(viewWidget.width()*-1,-20,viewWidget.width(),-20);
+
     m_scene->addLine(vert,line_type);
     m_scene->addLine(hori,line_type);
 }
@@ -209,7 +226,7 @@ void Graphics::show_Axis(char direction,QSize size, int step){
         }
     }
 }
-
+/*
 void Graphics::show_frame(ParsedData *parDat, int frame){
     //size of graphicsView
         //*100 for test
@@ -225,6 +242,9 @@ void Graphics::show_frame(ParsedData *parDat, int frame){
         renderPoints();
     //recalculate coordinations
 }
+*/
+
+/*
 void Graphics::show_frame(int frame){
     //m_scene->clear();
     removeItem();
@@ -238,7 +258,43 @@ void Graphics::show_frame(int frame){
     //show_Axis('a',viewWidget,10);
     show_CenterMarker();
 }
+*/
 
+void Graphics::show_frame(int frame){
+    //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
+    //m_scene->clear();
+
+    //removeItem();
+
+    /*
+    if(counter_showData > 0){
+        for(int i=0;i<items_list.size();i++){
+            m_scene->removeItem(items_list[i]);
+        }
+        items_list.clear();
+        m_scene->destroyItemGroup(group);
+    }
+    counter_showData++;
+    for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
+        int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
+        int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
+        //drawPoint(posX,posY,point_multiplier);
+        loadPoint(posX,posY,point_multiplier);
+    }
+    renderPoints();
+    if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
+        actualFrame = 0;
+        counter_showData = 0;
+        tim_showData->stop();
+    }
+    else{
+        actualFrame++;
+    }
+    //show_Axis('a',viewWidget,10);
+    show_CenterMarker();
+    emit frame_sig(actualFrame-1);
+    */
+}
 
 void Graphics::showData(int start_Frame, int end_Frame,int fps){
     actualFrame = start_Frame;
@@ -267,20 +323,40 @@ void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
 void Graphics::on_showData_next(){
-    //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
-    //m_scene->clear();
+    /*
+    if(counter_showData > 0){
+        for(int i=0;i<items_list.size();i++){
+            m_scene->removeItem(items_list[i]);
+        }
+        items_list.clear();
+        //m_scene->destroyItemGroup(group);
+    }
+    counter_showData++;
+    */
+    // Get a list of all the items in the scene
+    QList<QGraphicsItem*> all_items = m_scene->items();
 
-    //removeItem();
+    // Loop through the list and remove any ellipses that were previously added
+    int var = m_scene->items().size();
+    for (int i = 0; i < all_items.size(); i++) {
+        if (all_items.at(i)->type() == QGraphicsEllipseItem::Type) {
+            m_scene->removeItem(all_items.at(i));
+            var = m_scene->items().size();
+        }
+        items_list.clear();
+    }
 
-    for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
-        int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
-        int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
+    int size = m_parDat->frame_data[actualFrame].size()-1;
+    for(int j=0;j<size;j++){
+        int posX = m_parDat->frame_data[actualFrame][j].posX; // multiplier*10;
+        int posY = m_parDat->frame_data[actualFrame][j].posY; // multiplier*10;
         //drawPoint(posX,posY,point_multiplier);
         loadPoint(posX,posY,point_multiplier);
     }
     renderPoints();
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
         actualFrame = 0;
+        counter_showData = 0;
         tim_showData->stop();
     }
     else{
@@ -289,4 +365,5 @@ void Graphics::on_showData_next(){
     //show_Axis('a',viewWidget,10);
     show_CenterMarker();
     emit frame_sig(actualFrame-1);
+
 }

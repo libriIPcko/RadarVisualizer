@@ -33,16 +33,17 @@ public:
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem(); //global variable for drawPoint(), it is recommended for without layer approachb
     QList<QGraphicsItem*> items_list;
-    //QGraphicsItemGroup *group = new QGraphicsItemGroup();
+    QGraphicsItemGroup *group = new QGraphicsItemGroup();
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 
     QTimer *tim_showData;
+    int counter_showData = 0;
     void showData(int startFrame, int endFrame,int fps);
     void pause();
     void play();
     void show_frame(int frame);
-    void show_frame(ParsedData *parDat, int frame);
+    //void show_frame(ParsedData *parDat, int frame);
     void show_CenterMarker();
 
     void show_Axis(char direction,QSize size, int step);

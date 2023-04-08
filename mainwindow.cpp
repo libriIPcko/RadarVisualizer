@@ -8,6 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->graphicsView->setScene(scene);
+    QTransform trnsf;
+    trnsf.rotate(180);
+    trnsf.translate(-50,0);
+    ui->graphicsView->setTransform(trnsf);
+
+
     grTest->bound_max_height = ui->centralwidget->size().height();
     grTest->bound_max_width = ui->centralwidget->size().width();
 
@@ -120,8 +126,6 @@ void MainWindow::on_pushButton_activity_released(){
 }
 
 void MainWindow::on_frame_graphic_refresh(int actualFrame){
-    qDebug() << actualFrame;
-    //ui->lcd_PointNum->intValue(m_parDat->frame_data[actualFrame].size());
     int value = datOp->parsed_data->frame_data[actualFrame].size();
     ui->lcd_PointNum->display(QString::number(value));
     ui->actual_frame_spinBox->setValue(actualFrame);
