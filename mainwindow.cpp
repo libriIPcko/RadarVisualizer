@@ -158,6 +158,7 @@ void MainWindow::on_play_pushButton_2_released()
 {
     //grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
     //grTest->play();
+    grTest->generateData(100);
 }
 
 void MainWindow::on_actual_framehorizontalSlider_sliderReleased()

@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include "qdatetime.h"
 #include <QGraphicsScene>
 
 
@@ -261,6 +262,40 @@ void Graphics::show_frame(int frame){
 }
 */
 
+void Graphics::generateData(int numDat){
+    /*
+    removeItem();
+    for(int i = 0;i<numDat;i++){
+        QDateTime currTime = QDateTime::currentDateTime();
+        int seedFTime = currTime.time().second()+currTime.time().minute();
+        QRandomGenerator randX;
+        randX.seed(seedFTime+i);
+        float posX = randX.generateDouble();
+        randX.seed(posX+i);
+        float posY = randX.generateDouble();
+        loadPoint(posX,posY,1);
+        qDebug() << i << " : " << "x: " << posX << " y:" << posY;
+    }
+    renderPoints();
+    */
+    removeItem();
+    for(int i=0;i<m_parDat->frame_data[numDat].size();i++){
+        loadPoint(m_parDat->frame_data[numDat][i].posX,m_parDat->frame_data[numDat][i].posY,1);
+        qDebug() << "DetObj: " << i << "posX: " << m_parDat->frame_data[numDat][i].posX << "posY: " << m_parDat->frame_data[numDat][i].posY;
+    }
+    renderPoints();
+
+    /*
+    grTest->renderPoints();
+    float pos_X = posX * multiplier;
+    float pos_Y = posY * multiplier;
+    //original command without change of size
+    //items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,2,2));
+    //change size
+    items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,0.1,0.1));
+    */
+}
+
 void Graphics::show_frame(int frame){
     if(items_list.size() != 0){
         for(int i=0;i<items_list.size();i++){
@@ -273,11 +308,14 @@ void Graphics::show_frame(int frame){
         show_CenterMarker();
     }
     counter_showData++;
-    for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
+    for(int i=0;i< m_parDat->frame_data[actualFrame].size();i++){
+        /*
         int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
         int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
         //drawPoint(posX,posY,point_multiplier);
         loadPoint(posX,posY,point_multiplier);
+        */
+        loadPoint(m_parDat->frame_data[actualFrame][i].posX,m_parDat->frame_data[actualFrame][i].posY,1);
     }
     renderPoints();
     emit frame_sig(actualFrame-1);
@@ -345,10 +383,13 @@ void Graphics::on_showData_next(){
     }
     int size = m_parDat->frame_data[actualFrame].size()-1;
     for(int j=0;j<size;j++){
+        /*
         int posX = m_parDat->frame_data[actualFrame][j].posX; // multiplier*10;
         int posY = m_parDat->frame_data[actualFrame][j].posY; // multiplier*10;
         //drawPoint(posX,posY,point_multiplier);
         loadPoint(posX,posY,point_multiplier);
+        */
+        loadPoint(m_parDat->frame_data[actualFrame][j].posX,m_parDat->frame_data[actualFrame][j].posY,1);
     }
     renderPoints();
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){

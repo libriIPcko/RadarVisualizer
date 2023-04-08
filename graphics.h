@@ -50,6 +50,9 @@ public:
     void find_MinMax_pos();
 
     QSize viewWidget;
+
+
+    void generateData(int numDat);
 private:
     QGraphicsScene *m_scene = new QGraphicsScene();
     ParsedData *m_parDat = new ParsedData();

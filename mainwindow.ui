@@ -125,7 +125,7 @@
             </size>
            </property>
            <property name="text">
-            <string>BROKEN</string>
+            <string>tst</string>
            </property>
           </widget>
          </item>
