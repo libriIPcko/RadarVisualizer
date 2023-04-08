@@ -267,12 +267,11 @@ void Graphics::show_frame(int frame){
             m_scene->removeItem(items_list[i]);
         }
         items_list.clear();
-        m_scene->destroyItemGroup(group);
+        //m_scene->destroyItemGroup(group);
     }
     else{
         show_CenterMarker();
     }
-
     counter_showData++;
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
         int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
@@ -293,8 +292,6 @@ void Graphics::show_frame(int frame){
     }
     */
     //show_Axis('a',viewWidget,10);
-
-
 }
 
 void Graphics::showData(int start_Frame, int end_Frame,int fps){
@@ -323,8 +320,7 @@ void Graphics::play(){
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
-void Graphics::
-on_showData_next(){
+void Graphics::on_showData_next(){
     /*
     if(counter_showData > 0){
         for(int i=0;i<items_list.size();i++){
@@ -347,7 +343,6 @@ on_showData_next(){
         }
         items_list.clear();
     }
-
     int size = m_parDat->frame_data[actualFrame].size()-1;
     for(int j=0;j<size;j++){
         int posX = m_parDat->frame_data[actualFrame][j].posX; // multiplier*10;

@@ -162,10 +162,11 @@ void MainWindow::on_play_pushButton_2_released()
 
 void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
 {
+    qDebug() << "frameHorizontalSlide: " << ui->actual_framehorizontalSlider->value();
     ui->actual_framehorizontalSlider->setValue(ui->actual_framehorizontalSlider->value());
     ui->actual_frame_spinBox->setValue(ui->actual_framehorizontalSlider->value());
     ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[ui->actual_framehorizontalSlider->value()].size()));
-    //grTest->show_frame(ui->actual_framehorizontalSlider->value());
+    grTest->show_frame(ui->actual_framehorizontalSlider->value());
 }
 
 /*
