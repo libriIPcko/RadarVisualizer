@@ -157,9 +157,16 @@ void MainWindow::on_pushButton_2_released()
 
 void MainWindow::on_play_pushButton_2_released()
 {
-    //grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
-    //grTest->play();
-    grTest->generateData(100);
+    //grTest->generateData(100);
+    //Test of relative path
+    QDir dir_parse_script;
+    QDir dir_CapturedData;
+    QDir dir_ParsedData;
+    dir_parse_script.setPath("RadarVisualizer/parse_script");
+    dir_CapturedData.setPath("RadarVisualizer/parse_script/CapturedData");
+    dir_ParsedData.setPath("RadarVisualizer/parse_script/ParsedData");
+    qDebug() << "Current path:" << dir_ParsedData.currentPath();
+    qDebug() << "Absolute path:" << dir_ParsedData.absolutePath();
 }
 
 void MainWindow::on_actual_framehorizontalSlider_sliderReleased()

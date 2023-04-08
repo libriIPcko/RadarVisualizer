@@ -7,6 +7,7 @@
 #include <parseddata.h>
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
 
 #include <parseddata.h>
 
@@ -34,6 +35,11 @@ public:
     QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
     QString path_ParsedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/";
     QString path_CapturedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/";
+
+    QDir dir_parse_script;
+    QDir dir_CapturedData;
+    QDir dir_ParsedData;
+
 
     //QString path_ParsedData =   "/parse_script/ParsedData/";
     //QString path_CapturedData = "/parse_script/CapturedData/";
