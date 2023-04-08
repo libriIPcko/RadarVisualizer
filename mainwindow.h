@@ -59,9 +59,9 @@ private slots:
 
     void on_play_pushButton_2_released();
 
-    void on_actual_frame_spinBox_valueChanged(int arg1);
+    //void on_actual_frame_spinBox_valueChanged(int arg1);
 
-    void on_actual_framehorizontalSlider_sliderMoved(int position);
+    //void on_actual_framehorizontalSlider_sliderMoved(int position);
 
     void on_datFiles_listWidget_itemClicked(QListWidgetItem *item);
 
@@ -69,9 +69,15 @@ private slots:
 
     void on_checkBox_toggled(bool checked);
 
-    void on_spinBox_editingFinished();
+    //void on_spinBox_editingFinished();
 
     void on_lineEdit_returnPressed();
+
+    void on_actual_framehorizontalSlider_sliderReleased();
+
+    void on_actual_frame_spinBox_editingFinished();
+
+    void on_doubleSpinBox_editingFinished();
 
 private:
     Ui::MainWindow *ui;

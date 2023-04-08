@@ -29,7 +29,7 @@ public:
     int bound_max_height = 0;
     int bound_max_width = 0;
 
-    int  point_multiplier = 100;
+    int  point_multiplier = 1;
     QTimer *tim_move = new QTimer();
     QGraphicsEllipseItem *ell = new QGraphicsEllipseItem(); //global variable for drawPoint(), it is recommended for without layer approachb
     QList<QGraphicsItem*> items_list;

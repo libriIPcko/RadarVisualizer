@@ -10,14 +10,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(scene);
     QTransform trnsf;
     trnsf.rotate(180);
-    trnsf.translate(-50,0);
+    trnsf.scale(10,10);
     ui->graphicsView->setTransform(trnsf);
 
 
     grTest->bound_max_height = ui->centralwidget->size().height();
     grTest->bound_max_width = ui->centralwidget->size().width();
 
-    grTest->point_multiplier = ui->spinBox->value();
+    //grTest->point_multiplier = ui->doubleSpinBox->value();
 
     ui->csvFiles_listWidget->setVisible(false);
     ui->datFiles_listWidget->setVisible(false);
@@ -156,27 +156,36 @@ void MainWindow::on_pushButton_2_released()
 
 void MainWindow::on_play_pushButton_2_released()
 {
-    grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
-    grTest->play();
+    //grTest->showData(ui->actual_frame_spinBox->value(),ui->max_frame_spinBox_2->value(),20);
+    //grTest->play();
 }
 
+void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
+{
+    ui->actual_framehorizontalSlider->setValue(ui->actual_framehorizontalSlider->value());
+    ui->actual_frame_spinBox->setValue(ui->actual_framehorizontalSlider->value());
+    ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[ui->actual_framehorizontalSlider->value()].size()));
+    //grTest->show_frame(ui->actual_framehorizontalSlider->value());
+}
 
+/*
 void MainWindow::on_actual_frame_spinBox_valueChanged(int arg1)
 {
     ui->actual_framehorizontalSlider->setValue(arg1);
     ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[ui->actual_framehorizontalSlider->value()].size()));
-    grTest->show_frame(arg1);
+    //grTest->show_frame(arg1);
     //grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
+*/
 
-
+/*
 void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
 {
     ui->actual_frame_spinBox->setValue(position);
-    grTest->show_frame(position);
+    //grTest->show_frame(position);
     //grTest->show_Axis('a',ui->graphicsView->size(),10);
 }
-
+*/
 
 void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFile)
 {
@@ -262,10 +271,15 @@ void MainWindow::on_checkBox_toggled(bool checked)
     }
 }
 
-void MainWindow::on_spinBox_editingFinished()
+
+void MainWindow::on_doubleSpinBox_editingFinished()
 {
-    grTest->point_multiplier = ui->spinBox->value();
-    qDebug() << QString::number(grTest->point_multiplier);
+    //grTest->point_multiplier = ui->spinBox->value();
+    //qDebug() << QString::number(grTest->point_multiplier);
+    QTransform currentTransform = ui->graphicsView->transform();
+    currentTransform.scale(ui->doubleSpinBox->value(),ui->doubleSpinBox->value());
+    ui->graphicsView->setTransform(currentTransform);
+    qDebug() << "dx: " << ui->graphicsView->transform().dx() << "dy" << ui->graphicsView->transform().dy();
 }
 
 void MainWindow::mousePressEvent(QGraphicsSceneMouseEvent* event) {
@@ -391,4 +405,16 @@ void MainWindow::on_lineEdit_returnPressed()
         }
     }
 }
+
+
+
+
+
+void MainWindow::on_actual_frame_spinBox_editingFinished()
+{
+    qDebug() << ui->actual_frame_spinBox->value();
+}
+
+
+
 

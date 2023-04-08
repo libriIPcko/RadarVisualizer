@@ -100,7 +100,7 @@ void Graphics::loadPoint(float posX,float posY,float multiplier){
    //original command without change of size
    //items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,2,2));
    //change size
-   items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,5,5));
+   items_list.append(new QGraphicsEllipseItem(pos_X,pos_Y,0.1,0.1));
 }
 
 void Graphics::renderPoints(){
@@ -163,6 +163,7 @@ void Graphics::show_CenterMarker(){
     QPen line_type;
     line_type.setStyle(Qt::DotLine);
     line_type.setBrush(Qt::red);
+    line_type.setWidthF(0.1);
     QLine vert;
     vert.setLine(0,0,0,viewWidget.height());
 
@@ -261,19 +262,17 @@ void Graphics::show_frame(int frame){
 */
 
 void Graphics::show_frame(int frame){
-    //qDebug() << "interval: " << tim_showData->interval() << "[ms]";
-    //m_scene->clear();
-
-    //removeItem();
-
-    /*
-    if(counter_showData > 0){
+    if(items_list.size() != 0){
         for(int i=0;i<items_list.size();i++){
             m_scene->removeItem(items_list[i]);
         }
         items_list.clear();
         m_scene->destroyItemGroup(group);
     }
+    else{
+        show_CenterMarker();
+    }
+
     counter_showData++;
     for(int i=0;i<(int) m_parDat->frame_data[actualFrame].size();i++){
         int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
@@ -282,6 +281,8 @@ void Graphics::show_frame(int frame){
         loadPoint(posX,posY,point_multiplier);
     }
     renderPoints();
+    emit frame_sig(actualFrame-1);
+    /*
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
         actualFrame = 0;
         counter_showData = 0;
@@ -290,10 +291,10 @@ void Graphics::show_frame(int frame){
     else{
         actualFrame++;
     }
-    //show_Axis('a',viewWidget,10);
-    show_CenterMarker();
-    emit frame_sig(actualFrame-1);
     */
+    //show_Axis('a',viewWidget,10);
+
+
 }
 
 void Graphics::showData(int start_Frame, int end_Frame,int fps){
