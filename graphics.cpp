@@ -164,10 +164,10 @@ void Graphics::show_CenterMarker(){
     line_type.setStyle(Qt::DotLine);
     line_type.setBrush(Qt::red);
     QLine vert;
-    vert.setLine(0,-20,0,viewWidget.height());
+    vert.setLine(0,0,0,viewWidget.height());
 
     QLine hori;
-    hori.setLine(viewWidget.width()*-1,-20,viewWidget.width(),-20);
+    hori.setLine(viewWidget.width()*-1,0,viewWidget.width(),0);
 
     m_scene->addLine(vert,line_type);
     m_scene->addLine(hori,line_type);
@@ -322,7 +322,8 @@ void Graphics::play(){
 void Graphics::on_move_timeout(){
     ell->moveBy(10,10);
 }
-void Graphics::on_showData_next(){
+void Graphics::
+on_showData_next(){
     /*
     if(counter_showData > 0){
         for(int i=0;i<items_list.size();i++){
