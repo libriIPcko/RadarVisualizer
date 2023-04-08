@@ -25,8 +25,12 @@ public:
     void to_CSV(ParsedData* parDat);
     int load_toParsedData_dependentOnFrame_COUNTER = 0;
 
+    QDir dir_parse_script;
+    QDir dir_CapturedData;
+    QDir dir_ParsedData;
 
     //Path for debug version:
+    /*
     QString defaulthPath_outputCSV = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/mmw_demo_output.csv";
     QString defaulthPath_inputDAT = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/AWR1843_captured.dat";
     QString relativePath_DATFiles = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/";
@@ -35,11 +39,14 @@ public:
     QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
     QString path_ParsedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/";
     QString path_CapturedData = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/";
+    */
 
-    QDir dir_parse_script;
-    QDir dir_CapturedData;
-    QDir dir_ParsedData;
-
+    //Final version of path definition
+    QString path_py;
+    QString path_ParsedData;
+    QString path_CapturedData;
+        QString relativePath_DATFiles;
+        QString relativePath_CSVFiles;
 
     //QString path_ParsedData =   "/parse_script/ParsedData/";
     //QString path_CapturedData = "/parse_script/CapturedData/";

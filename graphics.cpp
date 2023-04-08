@@ -308,17 +308,17 @@ void Graphics::show_frame(int frame){
         show_CenterMarker();
     }
     counter_showData++;
-    for(int i=0;i< m_parDat->frame_data[actualFrame].size();i++){
+    for(int i=0;i< m_parDat->frame_data[frame].size();i++){
         /*
         int posX = m_parDat->frame_data[actualFrame][i].posX; // multiplier*10;
         int posY = m_parDat->frame_data[actualFrame][i].posY; // multiplier*10;
         //drawPoint(posX,posY,point_multiplier);
         loadPoint(posX,posY,point_multiplier);
         */
-        loadPoint(m_parDat->frame_data[actualFrame][i].posX,m_parDat->frame_data[actualFrame][i].posY,1);
+        loadPoint(m_parDat->frame_data[frame][i].posX,m_parDat->frame_data[frame][i].posY,1);
     }
     renderPoints();
-    emit frame_sig(actualFrame-1);
+    emit frame_sig(frame);
     /*
     if(actualFrame >= endFrame && actualFrame >= (int)m_parDat->frame_data.size()){
         actualFrame = 0;

@@ -4,7 +4,16 @@
 
 DataOperation::DataOperation()
 {
+    dir_parse_script.setPath("/RadarVisualizer/parse_script/");
+    dir_ParsedData.setPath("/RadarVisualizer/parse_script/ParsedData/");
+    dir_CapturedData.setPath("/RadarVisualizer/parse_script/CapturedData/");
 
+    //Final version of path definition
+    path_py = dir_parse_script.absolutePath();
+    path_ParsedData = dir_ParsedData.absolutePath();
+    path_CapturedData = dir_CapturedData.absolutePath();
+        relativePath_DATFiles = dir_CapturedData.absolutePath();
+        relativePath_CSVFiles = dir_ParsedData.absolutePath();
 }
 void DataOperation::call_py(){
 

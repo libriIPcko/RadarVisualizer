@@ -45,7 +45,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -428,29 +428,6 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>310</y>
-        <width>351</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_5">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>310</y>
-        <width>31</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Path:</string>
       </property>
      </widget>
      <widget class="QLabel" name="notification">

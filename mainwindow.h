@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QCoreApplication>
 #include <QMainWindow>
 #include <QResizeEvent>
 #include <QEvent>
@@ -71,13 +72,15 @@ private slots:
 
     //void on_spinBox_editingFinished();
 
-    void on_lineEdit_returnPressed();
+    //void on_lineEdit_returnPressed();
 
     void on_actual_framehorizontalSlider_sliderReleased();
 
     void on_actual_frame_spinBox_editingFinished();
 
     void on_doubleSpinBox_editingFinished();
+
+    void on_actual_framehorizontalSlider_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;

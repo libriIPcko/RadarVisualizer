@@ -7,6 +7,17 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QString appPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("myproject.pro");
+    qDebug() << "Application path:" << appPath;
+    datOp->path_ParsedData =   QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("parse_script/ParsedData/");
+    datOp->path_CapturedData = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("parse_script/CapturedData/");
+    datOp->path_py =  QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("parse_script/");
+    qDebug() << datOp->path_ParsedData;
+    qDebug() << datOp->path_CapturedData;
+    qDebug() << datOp->path_py;
+
+
     ui->graphicsView->setScene(scene);
     QTransform trnsf;
     trnsf.rotate(180);
@@ -78,7 +89,11 @@ void MainWindow::update_datFiles_listWidget(){
     //for release version
         //QDir dir = datOp->relativePath_DATFiles;
         QDir dir;
+        //dir.setPath(datOp->path_CapturedData);
+        //qDebug() << datOp->dir_CapturedData.absolutePath();
+        //dir.setPath(datOp->dir_CapturedData.absolutePath());
         dir.setPath(datOp->path_CapturedData);
+        qDebug() << dir.absolutePath();
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
@@ -103,7 +118,11 @@ void MainWindow::update_csvFiles_listWidget(){
     //for release version
         //QDir dir = datOp->relativePath_CSVFiles;
         QDir dir;
+        //dir.setPath(datOp->path_ParsedData);
+        //qDebug() << datOp->dir_ParsedData.absolutePath();
+        //dir.setPath(datOp->dir_ParsedData.absolutePath());
         dir.setPath(datOp->path_ParsedData);
+        qDebug() << dir.absolutePath();
 
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
@@ -169,14 +188,7 @@ void MainWindow::on_play_pushButton_2_released()
     qDebug() << "Absolute path:" << dir_ParsedData.absolutePath();
 }
 
-void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
-{
-    qDebug() << "frameHorizontalSlide: " << ui->actual_framehorizontalSlider->value();
-    ui->actual_framehorizontalSlider->setValue(ui->actual_framehorizontalSlider->value());
-    ui->actual_frame_spinBox->setValue(ui->actual_framehorizontalSlider->value());
-    ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[ui->actual_framehorizontalSlider->value()].size()));
-    grTest->show_frame(ui->actual_framehorizontalSlider->value());
-}
+
 
 /*
 void MainWindow::on_actual_frame_spinBox_valueChanged(int arg1)
@@ -348,83 +360,27 @@ bool MainWindow::event(QEvent *event){
     return QMainWindow::event(event);
 }
 
-void MainWindow::on_lineEdit_returnPressed()
-{
-    QString path = ui->lineEdit->text();
-    std::replace(path.begin(),path.end(),'\\','/');
-    qDebug() << "path: " << path;
-
-    //update_csvFiles_listWidget();
-    //for debug version
-        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
-    //for release version
-        //QDir dir("../RadarVisualizer/");
-        //QString relPath_ParsedData = "parse_script/ParsedData/";
-        //QString relPath_CapturedData = "parse_script/CapturedData";
-        //dir.setPath(relPath_ParsedData);
-
-    //third-case
-
-        QString path_ParsedData =   "/parse_script/ParsedData/";
-        QString path_CapturedData = "/parse_script/CapturedData/";
-        QString path_ParseScript =  "/parse_script/";
-
-        datOp->path_py = path + path_ParseScript;
-        datOp->path_ParsedData = path + path_ParsedData;
-        datOp->path_CapturedData = path + path_CapturedData;
-
-    //
-        QString relPath_ParsedData = "/parse_script/ParsedData/";
-        QString relPath_CapturedData = "/parse_script/CapturedData/";
-        QDir dir_parsedData = path + relPath_ParsedData;
-        QDir dir_CapturedData = path + relPath_CapturedData;
-        qDebug() << "dirParsedData" << dir_parsedData;
-        qDebug() << "dirCapturedData" << dir_CapturedData;
-        datOp->defaulthPath_inputDAT = path + "/parse_script/CapturedData/AWR1843_captured.dat";
-        datOp->defaulthPath_outputCSV = path + "/parse_script/mmw_demo_output.csv";
-        datOp->relativePath_CSVFiles = path + relPath_ParsedData;
-        datOp->relativePath_DATFiles = path + relPath_CapturedData;
-    //
-
-        QDir dir(path+path_ParsedData);
-    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
-    {
-        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
-        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
-        //listWidget->addItem(item);
-        if(item_temp->text().contains(".cfg") == false){
-            ui->csvFiles_listWidget->addItem(item_temp);
-            item_csvFile = item_temp;
-        }
-    }
-    //update_datFiles_listWidget();
-    //for debug version
-        //dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
-    //for release version
-        //dir.setPath(relPath_CapturedData);
-        dir.setPath(path+path_CapturedData);
-
-    for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
-    {
-        QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
-        item_temp->setData(Qt::UserRole, file.absolutePath()); // if you need absolute path of the file
-        //listWidget->addItem(item);
-        if(item_temp->text().contains(".cfg") == false){
-            ui->datFiles_listWidget->addItem(item_temp);
-            item_datFile = item_temp;
-        }
-    }
-}
-
-
-
-
-
 void MainWindow::on_actual_frame_spinBox_editingFinished()
 {
-    qDebug() << ui->actual_frame_spinBox->value();
+    int newVal = ui->actual_frame_spinBox->value();
+    ui->actual_framehorizontalSlider->setValue(newVal);
+    ui->actual_framehorizontalSlider->setValue(newVal);
+    ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[newVal].size()));
+    grTest->show_frame(newVal);
 }
 
+void MainWindow::on_actual_framehorizontalSlider_sliderMoved(int position)
+{
+    //int newVal = ui->actual_framehorizontalSlider->value();
+    int newVal = position;
+    qDebug() << "frameHorizontalSlide: " << newVal;
+    ui->actual_framehorizontalSlider->setValue(newVal);
+    ui->actual_frame_spinBox->setValue(newVal);
+    ui->lcd_PointNum->display(QString::number(datOp->parsed_data->frame_data[newVal].size()));
+    grTest->show_frame(newVal);
+}
 
+void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
+{
 
-
+}
