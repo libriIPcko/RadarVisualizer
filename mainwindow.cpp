@@ -92,6 +92,7 @@ void MainWindow::update_datFiles_listWidget(){
         //dir.setPath(datOp->path_CapturedData);
         //qDebug() << datOp->dir_CapturedData.absolutePath();
         //dir.setPath(datOp->dir_CapturedData.absolutePath());
+        //dir.cdUp();
         dir.setPath(datOp->path_CapturedData);
         qDebug() << dir.absolutePath();
 
@@ -121,6 +122,8 @@ void MainWindow::update_csvFiles_listWidget(){
         //dir.setPath(datOp->path_ParsedData);
         //qDebug() << datOp->dir_ParsedData.absolutePath();
         //dir.setPath(datOp->dir_ParsedData.absolutePath());
+        //dir.cdUp();
+
         dir.setPath(datOp->path_ParsedData);
         qDebug() << dir.absolutePath();
 
