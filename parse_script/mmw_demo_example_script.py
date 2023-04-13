@@ -141,7 +141,6 @@ while (totalBytesParsed < readNumBytes):
                                        detectedSNR_array[obj],\
                                        detectedNoise_array[obj]])
 
-
     else:
         # error in parsing; exit the loop
         break

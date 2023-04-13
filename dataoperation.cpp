@@ -61,17 +61,24 @@ void DataOperation::call_py_parse(QString path){
     process->close();
 }
 
-QString DataOperation::call_py_parse_outFile(QString path){
-    qDebug() << path;
-    //QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+QString DataOperation::call_py(QString path){
     QString  command("python");
-    /*
-    QDate actualDate;
-    QTime actualTime;
-    QString date = QString::number(actualDate.day()) + "." + QString::number(actualDate.month()) + "__";
-    QString time = QString::number(actualTime.hour()) +":"+ QString::number(actualTime.minute()) + ":" + QString::number(actualTime.minute());
-    QString formatedPath = path + "/" + "parsOut" + "_" + date + time;
-    */
+    //QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
+    QStringList params = QStringList() << path << QString::number(1) << QString::number(2) << QString::number(3);
+    QProcess *process = new QProcess();
+    process->startDetached(command, params, path_py);
+    process->waitForFinished();
+    process->close();
+    return "end";
+}
+
+QString DataOperation::call_py_parse_outFile(QString path){
+
+    //QString path_py = "C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/";
+    QString script_py = "mmw_demo_example_script.py";
+    QDir dir;
+    dir.setPath("parse_script/mm_demo_example_script.py");
+    QString  command("python");
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString formatedSuffixPath =
             "parsOut_"
@@ -83,13 +90,12 @@ QString DataOperation::call_py_parse_outFile(QString path){
             + QString::number(currentDateTime.time().second()) +".csv";
     QString absoluteParsedPath = path_ParsedData + formatedSuffixPath;
     qDebug() << "absoluteParsedPath: " << absoluteParsedPath;
-    QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
+    //QStringList params = QStringList() << "mmw_demo_example_script.py" << path << absoluteParsedPath;
+    QStringList params = QStringList() << script_py << path << absoluteParsedPath;
     QProcess *process = new QProcess();
     process->startDetached(command, params, path_py);
     process->waitForFinished();
     process->close();
-
-
     return absoluteParsedPath;
 }
 

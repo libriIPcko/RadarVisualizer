@@ -89,6 +89,7 @@ void MainWindow::update_datFiles_listWidget(){
     QDir dir;
     dir.setPath(datOp->path_CapturedData);
     ui->tst_label_5->setText(dir.absolutePath());
+
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -213,18 +214,11 @@ void MainWindow::on_datFiles_listWidget_itemClicked(QListWidgetItem *item_datFil
             //Algorithm: parse, loadFromParseToTLVtempDat
         //datOp->call_py_parse(datOp->defaulthPath_inputDAT); //Here have to be modification to seeking actual file
         finalPath = datOp->call_py_parse_outFile(absolutePath);
+        ui->tst_label_5->setText(absolutePath);
         QFile csvFile(finalPath);
         while(csvFile.exists() == false){
 
         }
-        /*
-        datOp->read_from_parsed_file(finalPath);
-        //datOp->read_from_parsed_file(absolutePath);
-        //datOp->read_from_parsed_file(datOp->defaulthPath_outputCSV);
-        ui->max_frame_spinBox_2->setValue(datOp->parsed_data->frame_data.size()-1);
-        ui->actual_frame_spinBox->setMaximum(datOp->parsed_data->frame_data.size()-1);
-        ui->actual_framehorizontalSlider->setMaximum(datOp->parsed_data->frame_data.size()-1);
-        */
     }
     QString temp = "Data was parsed as: " + finalPath;
     //temp.append(finalPath);
@@ -371,6 +365,7 @@ void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
 }
 
 void MainWindow::on_testBTN_released(){
+    /*
     QDir dir;
     //dir.setPath(datOp->path_CapturedData);
     //qDebug() << datOp->dir_CapturedData.absolutePath();
@@ -378,7 +373,8 @@ void MainWindow::on_testBTN_released(){
     //dir.cdUp();
     dir.setPath(datOp->path_CapturedData);
     ui->tst_label_5->setText(dir.absolutePath());
-
+    */
+    datOp->call_py("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/test.py");
 
 }
 

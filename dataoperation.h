@@ -17,6 +17,7 @@ class DataOperation : QObject
 public:
     DataOperation();
     void call_py();
+    QString call_py(QString path);
     void call_py_parse(QString path);
     QString call_py_parse_outFile(QString path);
 
