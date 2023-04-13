@@ -64,6 +64,8 @@ public:
     QListWidget *csvFiles_listWidget;
     QLabel *typeofLW_Label;
     QLabel *notification;
+    QPushButton *testBTN;
+    QLabel *tst_label_5;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -261,7 +263,7 @@ public:
         typeofLW_Label->setAlignment(Qt::AlignCenter);
         notification = new QLabel(tab_2);
         notification->setObjectName("notification");
-        notification->setGeometry(QRect(440, 70, 241, 131));
+        notification->setGeometry(QRect(460, 230, 241, 131));
         QFont font;
         font.setPointSize(12);
         notification->setFont(font);
@@ -269,6 +271,13 @@ public:
         notification->setScaledContents(false);
         notification->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         notification->setWordWrap(true);
+        testBTN = new QPushButton(tab_2);
+        testBTN->setObjectName("testBTN");
+        testBTN->setGeometry(QRect(290, 10, 93, 29));
+        tst_label_5 = new QLabel(tab_2);
+        tst_label_5->setObjectName("tst_label_5");
+        tst_label_5->setGeometry(QRect(430, 10, 321, 61));
+        tst_label_5->setWordWrap(true);
         tabWidget->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -303,6 +312,8 @@ public:
         checkBox->setText(QCoreApplication::translate("MainWindow", "RAW dat/ old parsed dat", nullptr));
         typeofLW_Label->setText(QCoreApplication::translate("MainWindow", "Parsed csv data", nullptr));
         notification->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        testBTN->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
+        tst_label_5->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "DatOp", nullptr));
     } // retranslateUi
 

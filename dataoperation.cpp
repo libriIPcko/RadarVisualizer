@@ -4,16 +4,22 @@
 
 DataOperation::DataOperation()
 {
-    dir_parse_script.setPath("/RadarVisualizer/parse_script/");
-    dir_ParsedData.setPath("/RadarVisualizer/parse_script/ParsedData/");
-    dir_CapturedData.setPath("/RadarVisualizer/parse_script/CapturedData/");
-
     //Final version of path definition
+    //dir_parse_script.setPath("/RadarVisualizer/parse_script/");
+    dir_parse_script.setPath("parse_script/");
     path_py = dir_parse_script.absolutePath();
+    //dir_ParsedData.setPath("/RadarVisualizer/parse_script/ParsedData/");
+    dir_ParsedData.setPath("parse_script/ParsedData/");
     path_ParsedData = dir_ParsedData.absolutePath();
+//    dir_CapturedData.setPath("/RadarVisualizer/parse_script/CapturedData/");
+    dir_CapturedData.setPath("parse_script/CapturedData/");
     path_CapturedData = dir_CapturedData.absolutePath();
         relativePath_DATFiles = dir_CapturedData.absolutePath();
         relativePath_CSVFiles = dir_ParsedData.absolutePath();
+
+    qDebug() << "path_py: " << path_py;
+    qDebug() << "path_ParsedData: " << path_ParsedData;
+    qDebug() << "path_CapturedData: " << path_CapturedData;
 }
 void DataOperation::call_py(){
 

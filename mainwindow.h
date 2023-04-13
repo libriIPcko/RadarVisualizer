@@ -82,6 +82,8 @@ private slots:
 
     void on_actual_framehorizontalSlider_sliderMoved(int position);
 
+    void on_testBTN_released();
+
 private:
     Ui::MainWindow *ui;
     int min_frame_start = 0;

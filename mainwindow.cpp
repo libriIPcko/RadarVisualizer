@@ -37,14 +37,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->notification->setVisible(false);
     //update_csvFiles_listWidget();
     //for debug version
-        QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
+        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
     //for release version
 
         //QDir dir("../RadarVisualizer/");
         //QString relPath_ParsedData = "parse_script/ParsedData/";
         //QString relPath_CapturedData = "parse_script/CapturedData";
         //dir.setPath(relPath_ParsedData);
-
+    QDir dir;
+    dir.setPath(datOp->path_ParsedData);
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -55,12 +56,13 @@ MainWindow::MainWindow(QWidget *parent)
             item_csvFile = item_temp;
         }
     }
+
     //update_datFiles_listWidget();
     //for debug version
-        dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
+        //dir.setPath("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
     //for release version
         //dir.setPath(relPath_CapturedData);
-
+    dir.setPath(datOp->path_CapturedData);
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -71,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
             item_datFile = item_temp;
         }
     }
+
 }
 
 MainWindow::~MainWindow()
@@ -79,23 +82,13 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::update_datFiles_listWidget(){
-    qDebug() << item_datFile->listWidget()->size();
+    //qDebug() << item_datFile->listWidget()->size();
     if(item_datFile->listWidget()->size().isEmpty() == false){
         item_datFile->listWidget()->clear();
     }
-    //for Debug version
-        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/CapturedData/");
-
-    //for release version
-        //QDir dir = datOp->relativePath_DATFiles;
-        QDir dir;
-        //dir.setPath(datOp->path_CapturedData);
-        //qDebug() << datOp->dir_CapturedData.absolutePath();
-        //dir.setPath(datOp->dir_CapturedData.absolutePath());
-        //dir.cdUp();
-        dir.setPath(datOp->path_CapturedData);
-        qDebug() << dir.absolutePath();
-
+    QDir dir;
+    dir.setPath(datOp->path_CapturedData);
+    ui->tst_label_5->setText(dir.absolutePath());
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -113,20 +106,9 @@ void MainWindow::update_csvFiles_listWidget(){
     if(item_csvFile->listWidget()->size().isEmpty() == false){
         item_csvFile->listWidget()->clear();
     }
-    //for Debug Version
-        //QDir dir("C:/Users/bob/Documents/GitHub/RadarVisualizer/parse_script/ParsedData/");
-
-    //for release version
-        //QDir dir = datOp->relativePath_CSVFiles;
-        QDir dir;
-        //dir.setPath(datOp->path_ParsedData);
-        //qDebug() << datOp->dir_ParsedData.absolutePath();
-        //dir.setPath(datOp->dir_ParsedData.absolutePath());
-        //dir.cdUp();
-
-        dir.setPath(datOp->path_ParsedData);
-        qDebug() << dir.absolutePath();
-
+    QDir dir;
+    dir.setPath(datOp->path_ParsedData);
+    ui->tst_label_5->setText(dir.absolutePath());
     for (const QFileInfo &file : dir.entryInfoList(QDir::Files))
     {
         QListWidgetItem *item_temp = new QListWidgetItem(file.fileName());
@@ -387,3 +369,16 @@ void MainWindow::on_actual_framehorizontalSlider_sliderReleased()
 {
 
 }
+
+void MainWindow::on_testBTN_released(){
+    QDir dir;
+    //dir.setPath(datOp->path_CapturedData);
+    //qDebug() << datOp->dir_CapturedData.absolutePath();
+    //dir.setPath(datOp->dir_CapturedData.absolutePath());
+    //dir.cdUp();
+    dir.setPath(datOp->path_CapturedData);
+    ui->tst_label_5->setText(dir.absolutePath());
+
+
+}
+
