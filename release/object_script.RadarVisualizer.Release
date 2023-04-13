@@ -1,0 +1,11 @@
+release/dataoperation.o
+release/graphics.o
+release/main.o
+release/mainwindow.o
+release/parseddata.o
+release/test.o
+release/moc_dataoperation.o
+release/moc_graphics.o
+release/moc_mainwindow.o
+release/moc_parseddata.o
+release/moc_test.o
