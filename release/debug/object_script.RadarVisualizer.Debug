@@ -1,0 +1,11 @@
+debug/dataoperation.o
+debug/graphics.o
+debug/main.o
+debug/mainwindow.o
+debug/parseddata.o
+debug/test.o
+debug/moc_dataoperation.o
+debug/moc_graphics.o
+debug/moc_mainwindow.o
+debug/moc_parseddata.o
+debug/moc_test.o
